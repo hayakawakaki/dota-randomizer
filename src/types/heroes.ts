@@ -1,7 +1,7 @@
-import { heroComplexity, heroAttribute } from "@/constant";
+import { HERO_COMPLEXITY, HERO_ATTRIBUTES } from "@/constant";
 
-type HeroComplexity = typeof heroComplexity[keyof typeof heroComplexity];
-type HeroAttribute = typeof heroAttribute[keyof typeof heroAttribute];
+export type HeroComplexity = typeof HERO_COMPLEXITY[keyof typeof HERO_COMPLEXITY];
+export type HeroAttribute = typeof HERO_ATTRIBUTES[keyof typeof HERO_ATTRIBUTES];
 
 export type HeroTypes = {
   id: number;
