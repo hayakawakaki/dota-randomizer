@@ -3,12 +3,18 @@ import type { ReactNode } from "react";
 type ButtonProps = {
   children: ReactNode;
   status?: undefined | "active" | "disabled";
-  action: () => void;
+  onClick: () => void;
 };
 
-function Button({ children, status, action }: ButtonProps) {
+function Button({ children, status, onClick }: ButtonProps) {
+  let style = "button";
+
+  if (status) {
+    style += ` ${status}`;
+  }
+
   return (
-    <button className={`button ${status ? status : ""}`} onClick={action}>
+    <button className={style} onClick={onClick}>
       {children}
     </button>
   );
