@@ -1,8 +1,9 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useMemo } from "react";
+import { useFetch } from "@hooks/useFetch";
 import Button from "@components/ui/Button";
 import HeroesGrid from "@components/HeroesGrid";
 import Layout from "@components/Layout";
-import Loading from "@components/Loading";
+
 import type { HeroTypes, HeroComplexity, HeroAttribute } from "@/types/heroes";
 import {
   HERO_COMPLEXITY,
@@ -11,8 +12,13 @@ import {
 } from "@/constant";
 
 function App() {
+  const {
+    data: heroes,
+    loading,
+    error,
+  } = useFetch<HeroTypes[]>("/api/heroes.json");
+
   const [randomHero, setRandomHero] = useState("Not Selected");
-  const [heroes, setHeroes] = useState<HeroTypes[]>([]);
   const [complexity, setComplexity] = useState<HeroComplexity>(
     HERO_COMPLEXITY.UNDEFINED
   );
@@ -20,30 +26,11 @@ function App() {
 
   const lastRandomizedHeroRef = useRef<number | null>(null);
 
-  useEffect(() => {
-    async function fetchHeroes() {
-      const controller = new AbortController();
-      const signal = controller.signal;
-      try {
-        const res = await fetch("/api/heroes.json", { signal });
-        if (!res.ok) {
-          throw new Error(`Heroes fetch error! status: ${res.status}`);
-        }
-        const heroData = await res.json();
-        setHeroes(heroData);
-      } catch (err) {
-        if (!controller.signal.aborted) {
-          console.error("Fetch failed:", err);
-        }
-        return;
-      }
-    }
-    fetchHeroes();
-  }, []);
-
   const filteredHeroes = useMemo(() => {
+    if (!heroes) return [];
+
     let currentHeroes = heroes;
-    if (currentHeroes && currentHeroes.length === 0) return [];
+    if (currentHeroes.length === 0) return [];
 
     // Filter based on attribute
     if (attribute.size > 0) {
@@ -100,23 +87,25 @@ function App() {
       </div>
       <div>
         {ATTRIBUTES_BUTTONS.map((item) => (
-          <Button onClick={() => onUpdateAttribute(item.value)}>
+          <Button
+            onClick={() => onUpdateAttribute(item.value)}
+            key={`attr-button-${item.label}`}
+          >
             {item.label}
           </Button>
         ))}
       </div>
       <div>
         {COMPLEXITY_BUTTONS.map((item) => (
-          <Button onClick={() => onUpdateComplexity(item.value)}>
+          <Button
+            onClick={() => onUpdateComplexity(item.value)}
+            key={`complexity-button-${item.label}`}
+          >
             {item.label}
           </Button>
         ))}
       </div>
-      {heroes && heroes.length ? (
-        <HeroesGrid heroData={filteredHeroes} />
-      ) : (
-        <Loading />
-      )}
+      <HeroesGrid heroData={filteredHeroes} loading={loading} error={error} />
     </Layout>
   );
 }
