@@ -18,7 +18,7 @@ export const COMPLEXITY_BUTTONS = [
   { value: HERO_COMPLEXITY.HARD, label: 'Hard' }
 ] as const;
 
-export const ATTRIBUTES_BUTTONS = [
+export const ATTRIBUTE_BUTTONS = [
   { value: HERO_ATTRIBUTES.STRENGTH, label: 'Strength' },
   { value: HERO_ATTRIBUTES.AGILITY, label: 'Agility' },
   { value: HERO_ATTRIBUTES.INTELLIGENCE, label: 'Intelligence' },
