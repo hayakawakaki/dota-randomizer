@@ -1,7 +1,7 @@
 import HeroesFilter from "@components/HeroesFilter";
 import HeroesGrid from "@components/HeroesGrid";
 import Layout from "@components/Layout";
-import { useHeroes } from "@/hooks/useHeroes";
+import { useHeroManager } from "@/hooks/useHeroManager";
 
 function App() {
   const {
@@ -12,7 +12,7 @@ function App() {
     randomizeHero,
     updateAttribute,
     updateComplexity,
-  } = useHeroes();
+  } = useHeroManager();
 
   return (
     <Layout>

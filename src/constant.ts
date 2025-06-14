@@ -1,26 +1,27 @@
 export const HERO_COMPLEXITY = {
-  UNDEFINED: 0,
-  EASY: 1,
-  NORMAL: 2,
-  HARD: 3
+  UNDEFINED: { value: 0, label: "Default" },
+  EASY: { value: 1, label: "Easy" },
+  NORMAL: { value: 2, label: "Normal" },
+  HARD: { value: 3, label: "Hard" },
 } as const;
 
-export const HERO_ATTRIBUTES = {
-  STRENGTH: 1,
-  AGILITY: 2,
-  INTELLIGENCE: 3,
-  UNIVERSAL: 4
+export const HERO_ATTRIBUTE = {
+  STRENGTH: { value: 1, label: "Strength" },
+  AGILITY: { value: 2, label: "Agility" },
+  INTELLIGENCE: { value: 3, label: "Intelligence" },
+  UNIVERSAL: { value: 4, label: "Universal" },
 } as const;
+
+//= UI Related Constants
+export const ATTRIBUTE_BUTTONS = [
+  HERO_ATTRIBUTE.STRENGTH,
+  HERO_ATTRIBUTE.AGILITY,
+  HERO_ATTRIBUTE.INTELLIGENCE,
+  HERO_ATTRIBUTE.UNIVERSAL,
+];
 
 export const COMPLEXITY_BUTTONS = [
-  { value: HERO_COMPLEXITY.EASY, label: 'Easy' },
-  { value: HERO_COMPLEXITY.NORMAL, label: 'Normal' },
-  { value: HERO_COMPLEXITY.HARD, label: 'Hard' }
-] as const;
-
-export const ATTRIBUTE_BUTTONS = [
-  { value: HERO_ATTRIBUTES.STRENGTH, label: 'Strength' },
-  { value: HERO_ATTRIBUTES.AGILITY, label: 'Agility' },
-  { value: HERO_ATTRIBUTES.INTELLIGENCE, label: 'Intelligence' },
-  { value: HERO_ATTRIBUTES.UNIVERSAL, label: 'Universal' }
-] as const;
+  HERO_COMPLEXITY.EASY,
+  HERO_COMPLEXITY.NORMAL,
+  HERO_COMPLEXITY.HARD,
+];

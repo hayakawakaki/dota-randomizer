@@ -1,7 +1,4 @@
-import { HERO_COMPLEXITY, HERO_ATTRIBUTES } from "@/constant";
-
-export type HeroComplexity = typeof HERO_COMPLEXITY[keyof typeof HERO_COMPLEXITY];
-export type HeroAttribute = typeof HERO_ATTRIBUTES[keyof typeof HERO_ATTRIBUTES];
+import { HERO_COMPLEXITY, HERO_ATTRIBUTE } from "@/constant";
 
 export type HeroTypes = {
   id: number;
@@ -10,4 +7,9 @@ export type HeroTypes = {
   name_english_loc: string;
   primary_attr: HeroAttribute;
   complexity: HeroComplexity;
-}
+};
+
+export type HeroComplexity =
+  (typeof HERO_COMPLEXITY)[keyof typeof HERO_COMPLEXITY]["value"];
+export type HeroAttribute =
+  (typeof HERO_ATTRIBUTE)[keyof typeof HERO_ATTRIBUTE]["value"];

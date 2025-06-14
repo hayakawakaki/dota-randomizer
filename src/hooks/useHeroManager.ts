@@ -1,14 +1,11 @@
-import { useState, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { useFetch } from "@hooks/useFetch";
 import type { HeroTypes, HeroComplexity, HeroAttribute } from "@/types/heroes";
-import { HERO_COMPLEXITY } from "@/constant";
 
-type UseHeroReturn = {
+type HeroManagerReturn = {
   filteredHeroes: HeroTypes[];
   loading: boolean;
   error: string | null;
-  randomHero: string;
-  randomizeHero: () => void;
   complexity: HeroComplexity;
   attribute: Set<HeroAttribute>;
   updateAttribute: (value: HeroAttribute) => void;
@@ -16,20 +13,15 @@ type UseHeroReturn = {
   clearFilters: () => void;
 }
 
-export function useHeroes(): UseHeroReturn {
+export function useHeroManager(): HeroManagerReturn {
   const {
     data: heroes,
     loading,
     error,
   } = useFetch<HeroTypes[]>("/api/heroes.json");
 
-  const [complexity, setComplexity] = useState<HeroComplexity>(
-    HERO_COMPLEXITY.UNDEFINED
-  );
+  const [complexity, setComplexity] = useState<HeroComplexity>(0);
   const [attribute, setAttribute] = useState<Set<HeroAttribute>>(new Set());
-
-  const [randomHero, setRandomHero] = useState("Not Selected");
-  const lastRandomizedHeroRef = useRef<number | null>(null);
 
   const filteredHeroes = useMemo(() => {
     if (!heroes) return [];
@@ -44,7 +36,7 @@ export function useHeroes(): UseHeroReturn {
     }
 
     // Complexity filter
-    if (complexity > HERO_COMPLEXITY.UNDEFINED) {
+    if (complexity > 0) {
       currentHeroes = currentHeroes.filter(
         (item) => item.complexity === complexity
       );
@@ -67,27 +59,14 @@ export function useHeroes(): UseHeroReturn {
 
   function updateComplexity(value: HeroComplexity) {
     if (value === complexity) {
-      setComplexity(HERO_COMPLEXITY.UNDEFINED);
+      setComplexity(0);
       return;
     }
     setComplexity(value);
   }
 
-  function randomizeHero() {
-    if (!filteredHeroes || filteredHeroes.length === 0) return;
-
-    let idx = Math.floor(Math.random() * filteredHeroes.length);
-
-    // Prevents same hero to be randomized
-    while (filteredHeroes.length > 1 && lastRandomizedHeroRef.current === idx)
-      idx = Math.floor(Math.random() * filteredHeroes.length);
-
-    lastRandomizedHeroRef.current = idx;
-    setRandomHero(filteredHeroes[idx].name_loc);
-  }
-
   function clearFilters() {
-    setComplexity(HERO_COMPLEXITY.UNDEFINED);
+    setComplexity(0);
     setAttribute(new Set());
   }
 
@@ -95,8 +74,6 @@ export function useHeroes(): UseHeroReturn {
     filteredHeroes,
     loading,
     error,
-    randomHero,
-    randomizeHero,
     complexity,
     attribute,
     updateAttribute,

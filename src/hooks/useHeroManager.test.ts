@@ -1,8 +1,8 @@
 import { renderHook, act } from '@testing-library/react';
 import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
-import { useHeroes } from '@/hooks/useHeroes';
+import { useHeroManager } from '@/hooks/useHeroManager';
 import { useFetch } from '@hooks/useFetch';
-import { HERO_COMPLEXITY, HERO_ATTRIBUTES } from '@/constant';
+import { HERO_COMPLEXITY, HERO_ATTRIBUTE } from '@/constant';
 import type { HeroTypes } from '@/types/heroes';
 
 vi.mock('@hooks/useFetch');
@@ -14,7 +14,7 @@ const mockHeroes: HeroTypes[] = [
     name: 'pudge',
     name_loc: 'Pudge',
     name_english_loc: 'Pudge',
-    primary_attr: HERO_ATTRIBUTES.STRENGTH,
+    primary_attr: HERO_ATTRIBUTE.STRENGTH,
     complexity: HERO_COMPLEXITY.EASY,
   },
   {
@@ -22,7 +22,7 @@ const mockHeroes: HeroTypes[] = [
     name: 'invoker',
     name_loc: 'Invoker',
     name_english_loc: 'invoker',
-    primary_attr: HERO_ATTRIBUTES.INTELLIGENCE,
+    primary_attr: HERO_ATTRIBUTE.INTELLIGENCE,
     complexity: HERO_COMPLEXITY.HARD,
   },
   {
@@ -30,7 +30,7 @@ const mockHeroes: HeroTypes[] = [
     name: 'phantomassassin',
     name_loc: 'Phantom Assassin',
     name_english_loc: 'Phantom Assassin',
-    primary_attr: HERO_ATTRIBUTES.AGILITY,
+    primary_attr: HERO_ATTRIBUTE.AGILITY,
     complexity: HERO_COMPLEXITY.NORMAL,
   }
 ];
@@ -54,7 +54,7 @@ describe('useHeroes', () => {
         error: null,
       });
 
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       expect(result.current.filteredHeroes).toEqual([]);
       expect(result.current.loading).toBe(true);
@@ -71,7 +71,7 @@ describe('useHeroes', () => {
         error: null,
       });
 
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       expect(result.current.filteredHeroes).toEqual(mockHeroes);
       expect(result.current.loading).toBe(false);
@@ -86,7 +86,7 @@ describe('useHeroes', () => {
         error: errorMessage,
       });
 
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       expect(result.current.filteredHeroes).toEqual([]);
       expect(result.current.loading).toBe(false);
@@ -104,27 +104,27 @@ describe('useHeroes', () => {
     });
 
     it('should filter heroes by single attribute', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTES.STRENGTH);
+        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH);
       });
 
-      expect(result.current.attribute.has(HERO_ATTRIBUTES.STRENGTH)).toBe(true);
+      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH)).toBe(true);
       expect(result.current.filteredHeroes).toHaveLength(1);
       expect(result.current.filteredHeroes[0].name_loc).toBe('Pudge');
     });
 
     it('should filter heroes by multiple attributes', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTES.STRENGTH);
-        result.current.updateAttribute(HERO_ATTRIBUTES.INTELLIGENCE);
+        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH);
+        result.current.updateAttribute(HERO_ATTRIBUTE.INTELLIGENCE);
       });
 
-      expect(result.current.attribute.has(HERO_ATTRIBUTES.STRENGTH)).toBe(true);
-      expect(result.current.attribute.has(HERO_ATTRIBUTES.INTELLIGENCE)).toBe(true);
+      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH)).toBe(true);
+      expect(result.current.attribute.has(HERO_ATTRIBUTE.INTELLIGENCE)).toBe(true);
       expect(result.current.filteredHeroes).toHaveLength(2);
       expect(result.current.filteredHeroes.map(h => h.name_loc)).toEqual(
         expect.arrayContaining(['Pudge', 'Invoker'])
@@ -132,17 +132,17 @@ describe('useHeroes', () => {
     });
 
     it('should toggle attribute on/off when called multiple times', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTES.STRENGTH);
+        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH);
       });
-      expect(result.current.attribute.has(HERO_ATTRIBUTES.STRENGTH)).toBe(true);
+      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH)).toBe(true);
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTES.STRENGTH);
+        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH);
       });
 
-      expect(result.current.attribute.has(HERO_ATTRIBUTES.STRENGTH)).toBe(false);
+      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH)).toBe(false);
       expect(result.current.filteredHeroes).toHaveLength(3);
     });
   });
@@ -157,7 +157,7 @@ describe('useHeroes', () => {
     });
 
     it('should filter heroes by the selected complexity level', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.updateComplexity(HERO_COMPLEXITY.EASY);
@@ -171,7 +171,7 @@ describe('useHeroes', () => {
     });
 
     it('should toggle complexity filter off when same value is selected', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.updateComplexity(HERO_COMPLEXITY.EASY);
@@ -187,7 +187,7 @@ describe('useHeroes', () => {
     });
 
     it('should change complexity filter when different value is selected', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.updateComplexity(HERO_COMPLEXITY.EASY);
@@ -213,10 +213,10 @@ describe('useHeroes', () => {
     });
 
     it('should apply both attribute and complexity filters', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTES.INTELLIGENCE);
+        result.current.updateAttribute(HERO_ATTRIBUTE.INTELLIGENCE);
         result.current.updateComplexity(HERO_COMPLEXITY.HARD);
       });
 
@@ -225,7 +225,7 @@ describe('useHeroes', () => {
     });
 
     it('should return empty array when filters match no heroes', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.updateAttribute(1);
@@ -246,7 +246,7 @@ describe('useHeroes', () => {
     });
 
     it('should randomize hero from filtered heroes', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.randomizeHero();
@@ -256,10 +256,10 @@ describe('useHeroes', () => {
     });
 
     it('should not randomize when no filtered heroes available', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTES.STRENGTH);
+        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH);
         result.current.updateComplexity(HERO_COMPLEXITY.HARD);
       });
 
@@ -275,7 +275,7 @@ describe('useHeroes', () => {
         .mockReturnValueOnce(0.6)
         .mockReturnValueOnce(0.3);
 
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.randomizeHero();
@@ -291,7 +291,7 @@ describe('useHeroes', () => {
 
     it('should work correctly with single hero in filtered list', () => {
 
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.updateAttribute(1);
@@ -315,11 +315,11 @@ describe('useHeroes', () => {
     });
 
     it('should reset all filters to initial state', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTES.STRENGTH);
-        result.current.updateAttribute(HERO_ATTRIBUTES.INTELLIGENCE);
+        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH);
+        result.current.updateAttribute(HERO_ATTRIBUTE.INTELLIGENCE);
         result.current.updateComplexity(HERO_COMPLEXITY.NORMAL);
       });
 
@@ -336,7 +336,7 @@ describe('useHeroes', () => {
     });
 
     it('should not affect randomHero state when clearing filters', () => {
-      const { result } = renderHook(() => useHeroes());
+      const { result } = renderHook(() => useHeroManager());
 
       act(() => {
         result.current.randomizeHero();
