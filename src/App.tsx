@@ -1,7 +1,7 @@
 import HeroesFilter from "@components/HeroesFilter";
 import HeroesGrid from "@components/HeroesGrid";
 import Layout from "@components/Layout";
-import { useHeroes } from "./hooks/useHeroes";
+import { useHeroes } from "@/hooks/useHeroes";
 
 function App() {
   const {
