@@ -5,18 +5,20 @@ import {
   RANDOMIZE_SETTING_BUTTONS,
 } from "@/constant";
 import type { HeroComplexity, HeroAttribute } from "@/types/heroes";
-import type { RandomSettingKey } from "@/types/randomize";
+import type { RandomSetting, RandomSettingKey } from "@/types/randomize";
 
 type HeroesFilterProps = {
   updateAttribute: (value: HeroAttribute) => void;
   updateComplexity: (value: HeroComplexity) => void;
   updateRandomizationSetting: (value: RandomSettingKey) => void;
+  randomizeSetting: RandomSetting;
 };
 
 function HeroesConfigPanel({
   updateAttribute,
   updateComplexity,
   updateRandomizationSetting,
+  randomizeSetting,
 }: HeroesFilterProps) {
   return (
     <aside>
@@ -26,7 +28,7 @@ function HeroesConfigPanel({
             onClick={() => updateRandomizationSetting(item.key)}
             key={`setting-button-${index}`}
           >
-            {item.label}
+            {randomizeSetting[item.key] ? `Disable ${item.label}` : item.label}
           </Button>
         ))}
       </div>

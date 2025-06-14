@@ -35,7 +35,7 @@ const mockHeroes: HeroTypes[] = [
   },
 ];
 
-describe("useHeroes", () => {
+describe("useHeroManager", () => {
   beforeEach(() => {
     vi.clearAllMocks();
     vi.spyOn(Math, "random").mockReturnValue(0.6);
@@ -45,7 +45,7 @@ describe("useHeroes", () => {
     vi.restoreAllMocks();
   });
 
-  describe("useHeroes initial state", () => {
+  describe("useHeroManager initial state", () => {
     it("should return the initial state values", () => {
       mockUseFetch.mockReturnValue({
         data: null,
@@ -57,7 +57,7 @@ describe("useHeroes", () => {
 
       expect(result.current.filteredHeroes).toEqual([]);
       expect(result.current.loading).toBe(true);
-      expect(result.current.error).toBe(null);
+      expect(result.current.error).toBeNull();
       expect(result.current.complexity).toBe(HERO_COMPLEXITY.UNDEFINED.value);
       expect(result.current.attribute).toEqual(new Set());
     });
@@ -73,7 +73,7 @@ describe("useHeroes", () => {
 
       expect(result.current.filteredHeroes).toEqual(mockHeroes);
       expect(result.current.loading).toBe(false);
-      expect(result.current.error).toBe(null);
+      expect(result.current.error).toBeNull();
     });
 
     it("should return an error state when it fails", () => {

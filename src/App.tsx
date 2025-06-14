@@ -12,6 +12,7 @@ function App() {
   const {
     randomHero,
     randomizedLaneRef,
+    randomizeSetting,
     randomizeHero,
     updateRandomizationSetting,
   } = useHeroRandom(filteredHeroes);
@@ -24,6 +25,7 @@ function App() {
         randomizedLaneRef={randomizedLaneRef}
       />
       <HeroesConfigPanel
+        randomizeSetting={randomizeSetting}
         updateAttribute={updateAttribute}
         updateComplexity={updateComplexity}
         updateRandomizationSetting={updateRandomizationSetting}

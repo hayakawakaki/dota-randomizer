@@ -10,11 +10,12 @@ import type {
 type HeroRandomReturn = {
   randomHero: string;
   randomizedLaneRef: RefObject<string | null>;
+  randomizeSetting: RandomSetting;
   randomizeHero: () => void;
   updateRandomizationSetting: (targetSetting: RandomSettingKey) => void;
 };
 
-function setInitialRandomizeSettings() {
+export function setInitialRandomizeSettings() {
   return Object.fromEntries(
     Object.values(RANDOMIZE_SETTING).map(({ key, default: defaultValue }) => [
       key,
@@ -56,7 +57,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     }
   }
 
-  function toggleRandomizeSetting(targetSetting: RandomSettingKey) {
+  function updateRandomizationSetting(targetSetting: RandomSettingKey) {
     setRandomizeSetting((prev) => ({
       ...prev,
       [targetSetting]: !prev[targetSetting],
@@ -66,7 +67,8 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
   return {
     randomHero,
     randomizedLaneRef,
+    randomizeSetting,
     randomizeHero,
-    updateRandomizationSetting: toggleRandomizeSetting,
+    updateRandomizationSetting,
   };
 }
