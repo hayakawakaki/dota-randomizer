@@ -9,10 +9,9 @@ import type {
 
 type HeroRandomReturn = {
   randomHero: string;
-  lastRandomizedHeroRef: RefObject<number | null>;
   randomizedLaneRef: RefObject<string | null>;
   randomizeHero: () => void;
-  toggleRandomizeSetting: (targetSetting: RandomSettingKey) => void;
+  updateRandomizationSetting: (targetSetting: RandomSettingKey) => void;
 };
 
 function setInitialRandomizeSettings() {
@@ -52,6 +51,8 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
 
     if (randomizeSetting.LANES === true) {
       randomizeLane();
+    } else if (randomizeSetting.LANES === false && randomizedLaneRef.current) {
+      randomizedLaneRef.current = null;
     }
   }
 
@@ -64,9 +65,8 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
 
   return {
     randomHero,
-    lastRandomizedHeroRef,
     randomizedLaneRef,
     randomizeHero,
-    toggleRandomizeSetting,
+    updateRandomizationSetting: toggleRandomizeSetting,
   };
 }

@@ -1,18 +1,35 @@
 import Button from "@components/ui/Button";
-import { COMPLEXITY_BUTTONS, ATTRIBUTE_BUTTONS } from "@/constant";
+import {
+  COMPLEXITY_BUTTONS,
+  ATTRIBUTE_BUTTONS,
+  RANDOMIZE_SETTING_BUTTONS,
+} from "@/constant";
 import type { HeroComplexity, HeroAttribute } from "@/types/heroes";
+import type { RandomSettingKey } from "@/types/randomize";
 
 type HeroesFilterProps = {
   updateAttribute: (value: HeroAttribute) => void;
   updateComplexity: (value: HeroComplexity) => void;
+  updateRandomizationSetting: (value: RandomSettingKey) => void;
 };
 
-function HeroesFilter({
+function HeroesConfigPanel({
   updateAttribute,
   updateComplexity,
+  updateRandomizationSetting,
 }: HeroesFilterProps) {
   return (
     <aside>
+      <div>
+        {RANDOMIZE_SETTING_BUTTONS.map((item, index) => (
+          <Button
+            onClick={() => updateRandomizationSetting(item.key)}
+            key={`setting-button-${index}`}
+          >
+            {item.label}
+          </Button>
+        ))}
+      </div>
       <div>
         {ATTRIBUTE_BUTTONS.map((item) => (
           <Button
@@ -37,4 +54,4 @@ function HeroesFilter({
   );
 }
 
-export default HeroesFilter;
+export default HeroesConfigPanel;
