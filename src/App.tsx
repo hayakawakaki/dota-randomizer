@@ -1,28 +1,34 @@
-import HeroesFilter from "@components/HeroesFilter";
+import HeroesConfigPanel from "@/components/HeroesConfigPanel";
 import HeroesGrid from "@components/HeroesGrid";
 import Layout from "@components/Layout";
 import { useHeroManager } from "@/hooks/useHeroManager";
+import { useHeroRandom } from "@/hooks/useHeroRandom";
+import HeroesResult from "@/components/HeroesResult";
 
 function App() {
+  const { filteredHeroes, loading, error, updateAttribute, updateComplexity } =
+    useHeroManager();
+
   const {
-    filteredHeroes,
-    loading,
-    error,
     randomHero,
+    randomizedLaneRef,
+    randomizeSetting,
     randomizeHero,
-    updateAttribute,
-    updateComplexity,
-  } = useHeroManager();
+    updateRandomizationSetting,
+  } = useHeroRandom(filteredHeroes);
 
   return (
     <Layout>
-      <div>
-        <button onClick={randomizeHero}>Randomize Hero</button>
-        <p>{randomHero}</p>
-      </div>
-      <HeroesFilter
+      <HeroesResult
+        randomHero={randomHero}
+        randomizeHero={randomizeHero}
+        randomizedLaneRef={randomizedLaneRef}
+      />
+      <HeroesConfigPanel
+        randomizeSetting={randomizeSetting}
         updateAttribute={updateAttribute}
         updateComplexity={updateComplexity}
+        updateRandomizationSetting={updateRandomizationSetting}
       />
       <HeroesGrid heroData={filteredHeroes} loading={loading} error={error} />
     </Layout>

@@ -12,6 +12,19 @@ export const HERO_ATTRIBUTE = {
   UNIVERSAL: { value: 4, label: "Universal" },
 } as const;
 
+export const RANDOMIZE_SETTING = {
+  LANES: { key: "LANES", label: "Randomize Lanes", default: false },
+  FACETS: { key: "FACETS", label: "Randomize Facets", default: false },
+} as const;
+
+export const LANE_NAMES = {
+  POS1: "Carry",
+  POS2: "Midlane",
+  POS3: "Offlane",
+  POS4: "Soft Support",
+  POS5: "Hard Support",
+};
+
 //= UI Related Constants
 export const ATTRIBUTE_BUTTONS = [
   HERO_ATTRIBUTE.STRENGTH,
@@ -25,3 +38,5 @@ export const COMPLEXITY_BUTTONS = [
   HERO_COMPLEXITY.NORMAL,
   HERO_COMPLEXITY.HARD,
 ];
+
+export const RANDOMIZE_SETTING_BUTTONS = [RANDOMIZE_SETTING.LANES];
