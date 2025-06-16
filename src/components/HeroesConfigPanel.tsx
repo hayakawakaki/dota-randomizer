@@ -1,4 +1,5 @@
 import Button from "@components/ui/Button";
+import SliderCheckBox from "@components/ui/SliderCheckBox";
 import {
   COMPLEXITY_BUTTONS,
   ATTRIBUTE_BUTTONS,
@@ -23,13 +24,13 @@ function HeroesConfigPanel({
   return (
     <aside>
       <div>
-        {RANDOMIZE_SETTING_BUTTONS.map((item, index) => (
-          <Button
-            onClick={() => updateRandomizationSetting(item.key)}
-            key={`setting-button-${index}`}
-          >
-            {randomizeSetting[item.key] ? `Disable ${item.label}` : item.label}
-          </Button>
+        {RANDOMIZE_SETTING_BUTTONS.map((item) => (
+          <SliderCheckBox
+            key={`setting-button-${item.key}`}
+            label={item.label}
+            checked={randomizeSetting[item.key]}
+            onChange={() => updateRandomizationSetting(item.key)}
+          />
         ))}
       </div>
       <div>

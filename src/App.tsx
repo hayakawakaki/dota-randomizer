@@ -1,9 +1,9 @@
-import HeroesConfigPanel from "@/components/HeroesConfigPanel";
+import HeroesConfigPanel from "@components/HeroesConfigPanel";
 import HeroesGrid from "@components/HeroesGrid";
 import Layout from "@components/Layout";
-import { useHeroManager } from "@/hooks/useHeroManager";
-import { useHeroRandom } from "@/hooks/useHeroRandom";
-import HeroesResult from "@/components/HeroesResult";
+import { useHeroManager } from "@hooks/useHeroManager";
+import { useHeroRandom } from "@hooks/useHeroRandom";
+import HeroesResult from "@components/HeroesResult";
 
 function App() {
   const { filteredHeroes, loading, error, updateAttribute, updateComplexity } =
@@ -22,6 +22,7 @@ function App() {
       <HeroesResult
         randomHero={randomHero}
         randomizeHero={randomizeHero}
+        randomizeSetting={randomizeSetting}
         randomizedLaneRef={randomizedLaneRef}
       />
       <HeroesConfigPanel
