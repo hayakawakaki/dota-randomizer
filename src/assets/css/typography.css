@@ -1,0 +1,8 @@
+@font-face {
+  font-family: "Reaver";
+  src:
+    local("Reaver"),
+    url("@fonts/Reaver-Regular.woff") format("woff"),
+    url("@fonts/Reaver-SemiBold.woff") format("woff"),
+    url("@fonts/Reaver-Bold.woff") format("woff");
+}

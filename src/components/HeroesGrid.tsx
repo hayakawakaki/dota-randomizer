@@ -1,5 +1,6 @@
 import Loading from "@components/Loading";
 import type { HeroTypes } from "@/types/heroes";
+import "@css/components/heroes/grid.css";
 
 type HeroesGridProps = {
   heroData: HeroTypes[];
@@ -17,10 +18,15 @@ function HeroesGrid({ heroData, loading, error }: HeroesGridProps) {
   }
 
   return (
-    <div>
-      {heroData.map((item) => (
-        <p key={`hero-${item.id}`}>{item.name_loc}</p>
-      ))}
+    <div className="heroes-container">
+      <div className="heroes-grid">
+        {heroData.map((item) => (
+          <img
+            key={`hero-${item.id}`}
+            src={`/images/heroes/${item.name}.webp`}
+          />
+        ))}
+      </div>
     </div>
   );
 }

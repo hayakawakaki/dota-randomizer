@@ -1,0 +1,9 @@
+.app-wrapper {
+  overflow: hidden;
+  padding-top: var(--header-height);
+}
+
+.app-container {
+  width: 100%;
+  padding: 0 var(--padding);
+}

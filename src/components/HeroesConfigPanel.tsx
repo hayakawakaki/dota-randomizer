@@ -7,6 +7,7 @@ import {
 } from "@/constant";
 import type { HeroComplexity, HeroAttribute } from "@/types/heroes";
 import type { RandomSetting, RandomSettingKey } from "@/types/randomize";
+import "@css/components/heroes/panel.css";
 
 type HeroesFilterProps = {
   updateAttribute: (value: HeroAttribute) => void;
@@ -22,7 +23,7 @@ function HeroesConfigPanel({
   randomizeSetting,
 }: HeroesFilterProps) {
   return (
-    <aside>
+    <aside className="heroes-config-panel">
       <div>
         {RANDOMIZE_SETTING_BUTTONS.map((item) => (
           <SliderCheckBox

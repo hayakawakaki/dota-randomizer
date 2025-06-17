@@ -1,3 +1,7 @@
+import Background from "@components/ui/Background";
+import Header from "@components/Header";
+import "@css/components/layout.css";
+
 import type { ReactNode } from "react";
 
 type LayoutType = {
@@ -5,7 +9,15 @@ type LayoutType = {
 };
 
 function Layout({ children }: LayoutType) {
-  return <>{children}</>;
+  return (
+    <>
+      <Header />
+      <main className="app-wrapper">
+        <div className="app-container">{children}</div>
+      </main>
+      <Background image="/images/background.webp" />
+    </>
+  );
 }
 
 export default Layout;
