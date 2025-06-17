@@ -29,6 +29,7 @@ function Background({
     const styles: CSSProperties = {
       position: "fixed",
       width: "100%",
+      minHeight: "120dvh",
       height: "100%",
       inset: 0,
       zIndex: zIndex,
