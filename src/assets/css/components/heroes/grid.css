@@ -1,0 +1,24 @@
+.heroes-container {
+  container-name: heroes-container;
+  container-type: inline-size;
+}
+
+.heroes-grid {
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: repeat(4, 1fr);
+  padding: var(--padding) 0;
+  max-width: 75rem;
+}
+
+@container heroes-container (width >= calc(48rem - 2rem)) {
+  .heroes-grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@container heroes-container (width >= calc(75rem)) {
+  .heroes-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
