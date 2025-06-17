@@ -6,8 +6,15 @@ import { useHeroRandom } from "@hooks/useHeroRandom";
 import HeroesResult from "@components/HeroesResult";
 
 function App() {
-  const { filteredHeroes, loading, error, updateAttribute, updateComplexity } =
-    useHeroManager();
+  const {
+    filteredHeroes,
+    loading,
+    error,
+    attribute,
+    updateAttribute,
+    complexity,
+    updateComplexity,
+  } = useHeroManager();
 
   const {
     randomHero,
@@ -27,7 +34,9 @@ function App() {
       />
       <HeroesConfigPanel
         randomizeSetting={randomizeSetting}
+        attribute={attribute}
         updateAttribute={updateAttribute}
+        complexity={complexity}
         updateComplexity={updateComplexity}
         updateRandomizationSetting={updateRandomizationSetting}
       />

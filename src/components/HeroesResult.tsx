@@ -16,7 +16,11 @@ export default function HeroesResult({
 }: HeroesResultProps) {
   return (
     <div>
-      {randomHero}
+      {randomHero === "Random" ? (
+        <p>Not Selected</p>
+      ) : (
+        <img src={`/images/heroes/${randomHero}.webp`} alt="Randomized Hero" />
+      )}
       {randomizeSetting["LANES"] && randomizedLaneRef.current && (
         <p>{randomizedLaneRef.current}</p>
       )}
