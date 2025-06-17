@@ -53,8 +53,9 @@ function HeroesConfigPanel({
         ))}
       </div>
       <div>
-        {COMPLEXITY_BUTTONS.map((item) => (
+        {COMPLEXITY_BUTTONS.map((item, index) => (
           <ToggleButton
+            isActive={complexity >= index}
             onClick={() => updateComplexity(item.value)}
             key={`complexity-button-${item.label}`}
           >
