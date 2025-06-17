@@ -2,5 +2,10 @@
   position: fixed;
   inset: 0;
   height: var(--header-height);
+}
+
+.header-container {
+  max-width: 90rem;
   padding: 0 var(--padding);
+  margin: 0 auto;
 }

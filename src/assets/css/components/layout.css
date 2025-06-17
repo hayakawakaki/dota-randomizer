@@ -6,4 +6,6 @@
 .app-container {
   width: 100%;
   padding: 0 var(--padding);
+  max-width: 90rem;
+  margin: 0 auto;
 }

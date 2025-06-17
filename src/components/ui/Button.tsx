@@ -1,23 +1,29 @@
 import type { ReactNode } from "react";
 
-type ButtonProps = {
-  children: ReactNode;
-  status?: undefined | "active" | "disabled";
+type ToggleButtonProps = {
+  children?: ReactNode;
   onClick: () => void;
+  className?: string;
+  isActive?: boolean;
+  activeClassName?: string;
 };
 
-function Button({ children, status, onClick }: ButtonProps) {
-  let style = "button";
-
-  if (status) {
-    style += ` ${status}`;
-  }
+function ToggleButton({
+  children,
+  onClick,
+  className,
+  isActive = false,
+  activeClassName,
+}: ToggleButtonProps) {
+  const classes = [className, isActive && activeClassName]
+    .filter(Boolean)
+    .join(" ");
 
   return (
-    <button className={style} onClick={onClick}>
+    <button className={classes} onClick={onClick}>
       {children}
     </button>
   );
 }
 
-export default Button;
+export default ToggleButton;

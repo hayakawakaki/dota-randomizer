@@ -1,4 +1,4 @@
-import Button from "@components/ui/Button";
+import ToggleButton from "@components/ui/Button";
 import SliderCheckBox from "@components/ui/SliderCheckBox";
 import {
   COMPLEXITY_BUTTONS,
@@ -10,20 +10,25 @@ import type { RandomSetting, RandomSettingKey } from "@/types/randomize";
 import "@css/components/heroes/panel.css";
 
 type HeroesFilterProps = {
+  attribute: Set<HeroAttribute>;
   updateAttribute: (value: HeroAttribute) => void;
+  complexity: HeroComplexity;
   updateComplexity: (value: HeroComplexity) => void;
   updateRandomizationSetting: (value: RandomSettingKey) => void;
   randomizeSetting: RandomSetting;
 };
 
 function HeroesConfigPanel({
+  attribute,
   updateAttribute,
+  complexity,
   updateComplexity,
   updateRandomizationSetting,
   randomizeSetting,
 }: HeroesFilterProps) {
   return (
-    <aside className="heroes-config-panel">
+    <section className="heroes-config-panel">
+      <h3>Randomization Setting</h3>
       <div>
         {RANDOMIZE_SETTING_BUTTONS.map((item) => (
           <SliderCheckBox
@@ -36,25 +41,28 @@ function HeroesConfigPanel({
       </div>
       <div>
         {ATTRIBUTE_BUTTONS.map((item) => (
-          <Button
+          <ToggleButton
+            className="panel-buttons"
+            activeClassName="panel-buttons-active"
+            isActive={attribute.has(item.value)}
             onClick={() => updateAttribute(item.value)}
             key={`attr-button-${item.label}`}
           >
-            {item.label}
-          </Button>
+            <img src={`/images/attr/${item.label.toLowerCase()}.webp`} />
+          </ToggleButton>
         ))}
       </div>
       <div>
         {COMPLEXITY_BUTTONS.map((item) => (
-          <Button
+          <ToggleButton
             onClick={() => updateComplexity(item.value)}
             key={`complexity-button-${item.label}`}
           >
             {item.label}
-          </Button>
+          </ToggleButton>
         ))}
       </div>
-    </aside>
+    </section>
   );
 }
 

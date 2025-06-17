@@ -1,5 +1,59 @@
 .heroes-config-panel {
   display: flex;
-  flex-direction: column;
-  row-gap: 0.5rem;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+  border-radius: 3px;
+  background-color: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.5),
+    rgba(0, 0, 0, 0.3)
+  );
+  padding: 0 var(--padding);
+}
+
+.heroes-config-panel:first-child {
+  justify-self: flex-start;
+}
+
+.heroes-config-panel > :not(:first-child) {
+  display: inline-flex;
+  justify-content: flex-end;
+  flex-grow: 1;
+}
+
+.panel-buttons {
+  filter: grayscale(90%);
+  transition: filter 400ms ease-in-out;
+
+  & > img {
+    transform: scale(0.8);
+    transition: transform 200ms ease-in-out;
+  }
+
+  &:hover {
+    & > img {
+      transform: scale(0.9) !important;
+    }
+  }
+
+  &:active {
+    filter: none;
+    transform: scale(0.8);
+  }
+}
+
+.panel-buttons-active {
+  filter: none !important;
+
+  &:hover {
+    & > img {
+      transform: scale(0.9) !important;
+    }
+  }
+
+  &:active {
+    filter: grayscale(90%);
+    transform: scale(0.8);
+  }
 }

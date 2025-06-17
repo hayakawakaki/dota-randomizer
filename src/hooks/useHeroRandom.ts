@@ -25,7 +25,7 @@ export function setInitialRandomizeSettings() {
 }
 
 export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
-  const [randomHero, setRandomHero] = useState<string>("Not Selected");
+  const [randomHero, setRandomHero] = useState<string>("Random");
   const [randomizeSetting, setRandomizeSetting] = useState<RandomSetting>(
     setInitialRandomizeSettings
   );
@@ -48,7 +48,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
       idx = Math.floor(Math.random() * heroes.length);
 
     lastRandomizedHeroRef.current = idx;
-    setRandomHero(heroes[idx].name_loc);
+    setRandomHero(heroes[idx].name);
 
     if (randomizeSetting.LANES === true) {
       randomizeLane();
