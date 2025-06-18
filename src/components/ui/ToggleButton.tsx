@@ -20,7 +20,11 @@ function ToggleButton({
     .join(" ");
 
   return (
-    <button className={classes} onClick={onClick}>
+    <button
+      className={classes}
+      style={{ maxWidth: "content" }}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

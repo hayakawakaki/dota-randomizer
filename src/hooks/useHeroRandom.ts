@@ -8,7 +8,7 @@ import type {
 } from "@/types/randomize";
 
 type HeroRandomReturn = {
-  randomHero: string;
+  randomHero: string | null;
   randomizedLaneRef: RefObject<string | null>;
   randomizeSetting: RandomSetting;
   randomizeHero: () => void;
@@ -25,7 +25,7 @@ export function setInitialRandomizeSettings() {
 }
 
 export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
-  const [randomHero, setRandomHero] = useState<string>("Random");
+  const [randomHero, setRandomHero] = useState<string | null>(null);
   const [randomizeSetting, setRandomizeSetting] = useState<RandomSetting>(
     setInitialRandomizeSettings
   );

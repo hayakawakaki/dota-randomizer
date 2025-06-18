@@ -1,8 +1,9 @@
 import type { RefObject } from "react";
 import type { RandomSetting } from "@/types/randomize";
+import "@css/components/heroes/result.css";
 
 type HeroesResultProps = {
-  randomHero: string;
+  randomHero: string | null;
   randomizeHero: () => void;
   randomizedLaneRef: RefObject<string | null>;
   randomizeSetting: RandomSetting;
@@ -15,17 +16,29 @@ export default function HeroesResult({
   randomizeSetting,
 }: HeroesResultProps) {
   return (
-    <div>
-      {randomHero === "Random" ? (
-        <p>Not Selected</p>
-      ) : (
-        <img src={`/images/heroes/${randomHero}.webp`} alt="Randomized Hero" />
-      )}
-      {randomizeSetting["LANES"] && randomizedLaneRef.current && (
-        <p>{randomizedLaneRef.current}</p>
-      )}
-      <div>
-        <button onClick={randomizeHero}>Randomize</button>
+    <div className="heroes-result">
+      <div className="result-container">
+        <div>
+          <button className="randomize-button" onClick={randomizeHero}>
+            Randomize
+          </button>
+        </div>
+        {randomHero !== null ? (
+          <img
+            className="result-image"
+            src={`/images/heroes/${randomHero}.webp`}
+            alt={`${randomHero}'s Image`}
+          />
+        ) : (
+          <img
+            className="result-image"
+            src="https://upload.wikimedia.org/wikipedia/commons/6/6a/A_blank_flag.png"
+            alt={`${randomHero}'s Image`}
+          />
+        )}
+        {randomizeSetting["LANES"] && randomizedLaneRef.current && (
+          <p className="result-lane">{randomizedLaneRef.current}</p>
+        )}
       </div>
     </div>
   );

@@ -1,4 +1,4 @@
-import ToggleButton from "@components/ui/Button";
+import ToggleButton from "@/components/ui/ToggleButton";
 import SliderCheckBox from "@components/ui/SliderCheckBox";
 import {
   COMPLEXITY_BUTTONS,
@@ -27,43 +27,56 @@ function HeroesConfigPanel({
   randomizeSetting,
 }: HeroesFilterProps) {
   return (
-    <section className="heroes-config-panel">
-      <h3>Randomization Setting</h3>
-      <div>
-        {RANDOMIZE_SETTING_BUTTONS.map((item) => (
-          <SliderCheckBox
-            key={`setting-button-${item.key}`}
-            label={item.label}
-            checked={randomizeSetting[item.key]}
-            onChange={() => updateRandomizationSetting(item.key)}
-          />
-        ))}
-      </div>
-      <div>
-        {ATTRIBUTE_BUTTONS.map((item) => (
-          <ToggleButton
-            className="panel-buttons"
-            activeClassName="panel-buttons-active"
-            isActive={attribute.has(item.value)}
-            onClick={() => updateAttribute(item.value)}
-            key={`attr-button-${item.label}`}
-          >
-            <img src={`/images/attr/${item.label.toLowerCase()}.webp`} />
-          </ToggleButton>
-        ))}
-      </div>
-      <div>
-        {COMPLEXITY_BUTTONS.map((item, index) => (
-          <ToggleButton
-            isActive={complexity >= index}
-            onClick={() => updateComplexity(item.value)}
-            key={`complexity-button-${item.label}`}
-          >
-            {item.label}
-          </ToggleButton>
-        ))}
-      </div>
-    </section>
+    <aside className="heroes-config-panel">
+      <section>
+        <h3>Randomization Setting</h3>
+        <div className="vertical-align">
+          {RANDOMIZE_SETTING_BUTTONS.map((item) => (
+            <SliderCheckBox
+              key={`setting-button-${item.key}`}
+              label={item.label}
+              checked={randomizeSetting[item.key]}
+              onChange={() => updateRandomizationSetting(item.key)}
+            />
+          ))}
+        </div>
+      </section>
+      <section>
+        <h3>Attributes Filter</h3>
+        <div className="vertical-align">
+          {ATTRIBUTE_BUTTONS.map((item) => (
+            <ToggleButton
+              className="attr-buttons"
+              activeClassName="attr-buttons-active"
+              isActive={attribute.has(item.value)}
+              onClick={() => updateAttribute(item.value)}
+              key={`attr-button-${item.label}`}
+            >
+              <img src={`/images/attr/${item.image}`} />
+            </ToggleButton>
+          ))}
+        </div>
+      </section>
+      <section>
+        <h3>Complexity Filter</h3>
+        <div className="vertical-align">
+          {COMPLEXITY_BUTTONS.map((item, index) => (
+            <ToggleButton
+              className="complexity-buttons"
+              activeClassName="complexity-buttons-active"
+              isActive={complexity >= index + 1}
+              onClick={() => updateComplexity(item.value)}
+              key={`complexity-button-${item.label}`}
+            >
+              <img
+                src="/images/diamond.webp"
+                alt={`Complexity - ${item.label}`}
+              />
+            </ToggleButton>
+          ))}
+        </div>
+      </section>
+    </aside>
   );
 }
 
