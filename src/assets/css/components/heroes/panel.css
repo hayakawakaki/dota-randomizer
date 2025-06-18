@@ -1,59 +1,97 @@
 .heroes-config-panel {
   display: flex;
+  justify-content: space-between;
+  height: var(--panel-height);
   align-items: center;
-  border: 1px solid rgba(0, 0, 0, 0.8);
-  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.5);
+  vertical-align: top;
+  padding: 0.5rem var(--padding);
+  border: 1px solid rgba(10, 4, 4, 0.8);
+  box-shadow: 0px 0px 30px rgba(10, 10, 10, 0.3);
   border-radius: 3px;
-  background-color: linear-gradient(
-    to right,
-    rgba(0, 0, 0, 0.5),
-    rgba(0, 0, 0, 0.3)
-  );
-  padding: 0 var(--padding);
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+  user-select: none;
+
+  & > section {
+    height: 100%;
+    min-width: 200px;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 0.5rem;
+  }
 }
 
-.heroes-config-panel:first-child {
-  justify-self: flex-start;
-}
-
-.heroes-config-panel > :not(:first-child) {
-  display: inline-flex;
-  justify-content: flex-end;
-  flex-grow: 1;
-}
-
-.panel-buttons {
+.attr-buttons {
   filter: grayscale(90%);
-  transition: filter 400ms ease-in-out;
+  transition: filter 300ms ease-in-out;
 
   & > img {
-    transform: scale(0.8);
-    transition: transform 200ms ease-in-out;
+    height: 2.75rem;
+    transform: scale(0.9);
+    transition: transform 150ms ease-in-out;
   }
 
   &:hover {
     & > img {
-      transform: scale(0.9) !important;
+      transform: scale(1);
     }
   }
 
   &:active {
     filter: none;
-    transform: scale(0.8);
+    transform: scale(0.9);
   }
 }
 
-.panel-buttons-active {
-  filter: none !important;
+.attr-buttons-active {
+  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5)) !important;
 
   &:hover {
     & > img {
-      transform: scale(0.9) !important;
+      transform: scale(1) !important;
     }
   }
 
   &:active {
-    filter: grayscale(90%);
-    transform: scale(0.8);
+    filter: grayscale(90%) !important;
+    transform: scale(0.9);
+  }
+}
+
+.complexity-buttons {
+  height: 100%;
+  opacity: 0.3;
+  transition: opacity 300ms ease-in-out;
+
+  & > img {
+    height: 2.5rem;
+    transform: scale(0.9);
+    transition: transform 150ms ease-in-out;
+  }
+
+  &:hover {
+    & > img {
+      transform: scale(1);
+    }
+  }
+
+  &:active {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+}
+
+.complexity-buttons-active {
+  opacity: 1 !important;
+
+  &:hover {
+    & > img {
+      transform: scale(1) !important;
+    }
+  }
+
+  &:active {
+    opacity: 0.3 !important;
+    transform: scale(0.9);
   }
 }
