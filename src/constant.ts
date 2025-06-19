@@ -1,4 +1,3 @@
-import { RANDOMIZE_SETTING } from "@/constant";
 export const HERO_COMPLEXITY = {
   UNDEFINED: { value: 0, label: "Default" },
   EASY: { value: 1, label: "Easy" },
@@ -15,7 +14,11 @@ export const HERO_ATTRIBUTE = {
 
 export const RANDOMIZE_SETTING = {
   LANES: { key: "LANES", label: "Randomize Lanes", default: false },
-  ANIMATION: { key: "SKIPANIMATION", label: "Skip Animation", default: false },
+  SKIPANIMATION: {
+    key: "SKIPANIMATION",
+    label: "Skip Animation",
+    default: false,
+  },
 } as const;
 
 export const LANE_NAMES = {
@@ -46,6 +49,6 @@ export const COMPLEXITY_BUTTONS = [
 ] as const;
 
 export const RANDOMIZE_SETTING_BUTTONS = [
-  RANDOMIZE_SETTING.ANIMATION,
+  RANDOMIZE_SETTING.SKIPANIMATION,
   RANDOMIZE_SETTING.LANES,
 ];
