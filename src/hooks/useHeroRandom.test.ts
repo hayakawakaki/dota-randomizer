@@ -42,7 +42,7 @@ describe("useHeroRandom", () => {
     it("should return the initial return values of", () => {
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
 
-      expect(result.current.randomHero).toEqual("Random");
+      expect(result.current.randomHero).toEqual(null);
       expect(result.current.randomizedLaneRef.current).toBeNull();
       expect(typeof result.current.randomizeHero).toBe("function");
       expect(typeof result.current.updateRandomizationSetting).toBe("function");

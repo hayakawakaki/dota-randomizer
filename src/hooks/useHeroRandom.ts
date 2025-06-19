@@ -38,21 +38,49 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     randomizedLaneRef.current = lanes[idx];
   }
 
+  async function animateRandomization() {
+    let heroIdx;
+    let laneIdx;
+    const lanes = randomizeSetting.LANES ? Object.values(LANE_NAMES) : null;
+
+    for (let i = 0; i < 40; i++) {
+      heroIdx = Math.floor(Math.random() * heroes.length);
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 10 + i * 5);
+      });
+
+      setRandomHero(heroes[heroIdx].name);
+
+      if (lanes) {
+        laneIdx = Math.floor(Math.random() * lanes.length);
+        randomizedLaneRef.current = lanes[laneIdx];
+      }
+    }
+  }
+
   function randomizeHero() {
     if (!heroes || heroes.length === 0) return;
 
     let idx = Math.floor(Math.random() * heroes.length);
-
     // Prevents same hero to be randomized
     while (heroes.length > 1 && lastRandomizedHeroRef.current === idx)
       idx = Math.floor(Math.random() * heroes.length);
 
+    // Skip animation setting
+    if (randomizeSetting.SKIPANIMATION === false) {
+      animateRandomization();
+    }
+
+    // Set result
     lastRandomizedHeroRef.current = idx;
     setRandomHero(heroes[idx].name);
 
+    // Randomize lanes setting
     if (randomizeSetting.LANES === true) {
       randomizeLane();
     } else if (randomizeSetting.LANES === false && randomizedLaneRef.current) {
+      // Reset to null when used then got disabled
       randomizedLaneRef.current = null;
     }
   }

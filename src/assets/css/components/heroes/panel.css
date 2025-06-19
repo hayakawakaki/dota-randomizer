@@ -1,32 +1,24 @@
 .heroes-config-panel {
   display: flex;
   justify-content: space-between;
-  height: var(--panel-height);
   align-items: center;
-  vertical-align: top;
-  padding: 0.5rem var(--padding);
-  border: 1px solid rgba(10, 4, 4, 0.8);
-  box-shadow: 0px 0px 30px rgba(10, 10, 10, 0.3);
-  border-radius: 3px;
-  background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.3));
+  min-height: var(--panel-height);
+  padding: var(--padding);
   user-select: none;
 
   & > section {
-    height: 100%;
-    min-width: 200px;
     display: inline-flex;
     flex-direction: column;
     align-items: center;
     row-gap: 0.5rem;
+    height: 100%;
   }
 }
 
 .attr-buttons {
   filter: grayscale(90%);
-  transition: filter 300ms ease-in-out;
-
   & > img {
-    height: 2.75rem;
+    height: 3.25rem;
     transform: scale(0.9);
     transition: transform 150ms ease-in-out;
   }
@@ -44,7 +36,39 @@
 }
 
 .attr-buttons-active {
-  filter: drop-shadow(0 0 2px rgba(255, 255, 255, 0.5)) !important;
+  &.attr-1 {
+    filter: drop-shadow(0 0 5px rgba(240, 0, 0, 0.6)) !important;
+  }
+
+  &.attr-2 {
+    filter: drop-shadow(0 0 5px rgba(0, 240, 0, 0.6)) !important;
+  }
+
+  &.attr-3 {
+    filter: drop-shadow(0 0 5px rgba(0, 0, 240, 0.6)) !important;
+  }
+
+  &.attr-4 {
+    position: relative;
+    filter: none;
+  }
+
+  &.attr-4:before {
+    filter: blur(1rem);
+    transform: scale(0.7);
+    content: "";
+    border-radius: 50%;
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: conic-gradient(
+      from 0deg,
+      lightgreen 0% 29%,
+      red 30% 65%,
+      blue 66% 92%,
+      lightgreen 93% 100%
+    );
+  }
 
   &:hover {
     & > img {
@@ -64,7 +88,7 @@
   transition: opacity 300ms ease-in-out;
 
   & > img {
-    height: 2.5rem;
+    height: 3rem;
     transform: scale(0.9);
     transition: transform 150ms ease-in-out;
   }

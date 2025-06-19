@@ -14,7 +14,11 @@ export const HERO_ATTRIBUTE = {
 
 export const RANDOMIZE_SETTING = {
   LANES: { key: "LANES", label: "Randomize Lanes", default: false },
-  FACETS: { key: "FACETS", label: "Randomize Facets", default: false },
+  SKIPANIMATION: {
+    key: "SKIPANIMATION",
+    label: "Skip Animation",
+    default: false,
+  },
 } as const;
 
 export const LANE_NAMES = {
@@ -44,4 +48,7 @@ export const COMPLEXITY_BUTTONS = [
   HERO_COMPLEXITY.HARD,
 ] as const;
 
-export const RANDOMIZE_SETTING_BUTTONS = [RANDOMIZE_SETTING.LANES];
+export const RANDOMIZE_SETTING_BUTTONS = [
+  RANDOMIZE_SETTING.SKIPANIMATION,
+  RANDOMIZE_SETTING.LANES,
+];
