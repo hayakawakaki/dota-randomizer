@@ -9,6 +9,7 @@ import type {
 
 type HeroRandomReturn = {
   randomHero: string | null;
+  isRandomizing: boolean;
   randomizedLaneRef: RefObject<string | null>;
   randomizeSetting: RandomSetting;
   randomizeHero: () => void;
@@ -26,6 +27,7 @@ export function setInitialRandomizeSettings() {
 
 export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
   const [randomHero, setRandomHero] = useState<string | null>(null);
+  const [isRandomizing, setIsRandomizing] = useState<boolean>(false);
   const [randomizeSetting, setRandomizeSetting] = useState<RandomSetting>(
     setInitialRandomizeSettings
   );
@@ -59,8 +61,8 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     }
   }
 
-  function randomizeHero() {
-    if (!heroes || heroes.length === 0) return;
+  async function randomizeHero() {
+    if (!heroes || heroes.length === 0 || isRandomizing === true) return;
 
     let idx = Math.floor(Math.random() * heroes.length);
     // Prevents same hero to be randomized
@@ -69,7 +71,12 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
 
     // Skip animation setting
     if (randomizeSetting.SKIPANIMATION === false) {
-      animateRandomization();
+      setIsRandomizing(true);
+      try {
+        await animateRandomization();
+      } finally {
+        setIsRandomizing(false);
+      }
     }
 
     // Set result
@@ -94,6 +101,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
 
   return {
     randomHero,
+    isRandomizing,
     randomizedLaneRef,
     randomizeSetting,
     randomizeHero,
