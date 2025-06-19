@@ -4,6 +4,7 @@ import "@css/components/heroes/result.css";
 
 type HeroesResultProps = {
   randomHero: string | null;
+  isRandomizing: boolean;
   randomizeHero: () => void;
   randomizedLaneRef: RefObject<string | null>;
   randomizeSetting: RandomSetting;
@@ -11,6 +12,7 @@ type HeroesResultProps = {
 
 export default function HeroesResult({
   randomHero,
+  isRandomizing,
   randomizeHero,
   randomizedLaneRef,
   randomizeSetting,
@@ -19,8 +21,12 @@ export default function HeroesResult({
     <div className="heroes-result">
       <div className="result-container shadow-container">
         <div>
-          <button className="randomize-button" onClick={randomizeHero}>
-            Randomize
+          <button
+            className="randomize-button"
+            onClick={randomizeHero}
+            disabled={isRandomizing}
+          >
+            {isRandomizing ? "Randomizing..." : "Randomize"}
           </button>
         </div>
         {randomHero !== null ? (

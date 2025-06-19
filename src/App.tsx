@@ -18,6 +18,7 @@ function App() {
 
   const {
     randomHero,
+    isRandomizing,
     randomizedLaneRef,
     randomizeSetting,
     randomizeHero,
@@ -28,6 +29,7 @@ function App() {
     <Layout>
       <HeroesResult
         randomHero={randomHero}
+        isRandomizing={isRandomizing}
         randomizeHero={randomizeHero}
         randomizeSetting={randomizeSetting}
         randomizedLaneRef={randomizedLaneRef}

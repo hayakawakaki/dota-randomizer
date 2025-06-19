@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react";
-import { describe, it, expect, beforeEach, vi } from "vitest";
+import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
 import {
   useHeroRandom,
   setInitialRandomizeSettings,
@@ -37,12 +37,20 @@ const mockHeroes: HeroTypes[] = [
 describe("useHeroRandom", () => {
   beforeEach(() => {
     vi.spyOn(Math, "random");
+    vi.useFakeTimers();
   });
+
+  afterEach(() => {
+    vi.runAllTimers();
+    vi.useRealTimers();
+  });
+
   describe("useHeroManager initial state", () => {
     it("should return the initial return values of", () => {
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
 
-      expect(result.current.randomHero).toEqual(null);
+      expect(result.current.randomHero).toBeNull();
+      expect(result.current.isRandomizing).toEqual(false);
       expect(result.current.randomizedLaneRef.current).toBeNull();
       expect(typeof result.current.randomizeHero).toBe("function");
       expect(typeof result.current.updateRandomizationSetting).toBe("function");
@@ -62,17 +70,32 @@ describe("useHeroRandom", () => {
     it("should randomize a hero from the passed hero data", () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
+      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+
+      act(() => {
+        result.current.updateRandomizationSetting(key);
+      });
+
+      expect(result.current.randomizeSetting[key]).toBe(true);
 
       act(() => {
         result.current.randomizeHero();
       });
 
-      expect(result.current.randomHero).toBe("Invoker");
+      expect(result.current.randomHero).toBe("invoker");
     });
 
-    it("should prevent heroes being randomized twice in a row", () => {
+    it("should prevent heroes being randomized twice in a row", async () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6).mockReturnValueOnce(0.3);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
+
+      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+
+      act(() => {
+        result.current.updateRandomizationSetting(key);
+      });
+
+      expect(result.current.randomizeSetting[key]).toBe(true);
 
       act(() => {
         result.current.randomizeHero();
@@ -85,6 +108,50 @@ describe("useHeroRandom", () => {
       });
 
       expect(result.current.randomHero).not.toBe(firstHero);
+    });
+
+    it("should return is isRandomizing to false after randomizing", () => {
+      Math.random = vi.fn().mockReturnValueOnce(0.6);
+      const { result } = renderHook(() => useHeroRandom(mockHeroes));
+      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+
+      act(() => {
+        result.current.updateRandomizationSetting(key);
+      });
+
+      expect(result.current.randomizeSetting[key]).toBe(true);
+
+      act(() => {
+        result.current.randomizeHero();
+      });
+
+      expect(result.current.isRandomizing).toBe(false);
+      expect(result.current.randomHero).toBeTruthy();
+    });
+
+    it("should skip animation when SKIPANIMATION is true", async () => {
+      Math.random = vi.fn().mockReturnValueOnce(0.6);
+      const { result } = renderHook(() => useHeroRandom(mockHeroes));
+      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+
+      expect(result.current.randomizeSetting[key]).toBe(false);
+
+      act(() => {
+        result.current.updateRandomizationSetting(key);
+      });
+
+      expect(result.current.randomizeSetting[key]).toBe(true);
+
+      const startTime = performance.now();
+
+      await act(async () => {
+        await result.current.randomizeHero();
+      });
+
+      const duration = performance.now() - startTime;
+      expect(duration).toBeLessThan(100);
+      expect(result.current.randomHero).toBeTruthy();
+      vi.runAllTimers();
     });
   });
 
@@ -106,16 +173,17 @@ describe("useHeroRandom", () => {
     it("should randomize a lane when the randomizeSettings.LANES is set to true", () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6).mockReturnValueOnce(0.3);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
+      const key = RANDOMIZE_SETTING.LANES.key;
+      const skipKey = RANDOMIZE_SETTING.SKIPANIMATION.key;
       act(() => {
-        result.current.updateRandomizationSetting(RANDOMIZE_SETTING.LANES.key);
+        result.current.updateRandomizationSetting(key);
+        result.current.updateRandomizationSetting(skipKey);
       });
-      expect(result.current.randomizeSetting[RANDOMIZE_SETTING.LANES.key]).toBe(
-        true
-      );
+      expect(result.current.randomizeSetting[key]).toBe(true);
       act(() => {
         result.current.randomizeHero();
       });
-      expect(result.current.randomHero).toBe("Invoker");
+      expect(result.current.randomHero).toBe("invoker");
       expect(result.current.randomizedLaneRef.current).toBe("Midlane");
     });
   });
