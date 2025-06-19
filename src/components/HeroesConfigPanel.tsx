@@ -27,7 +27,7 @@ function HeroesConfigPanel({
   randomizeSetting,
 }: HeroesFilterProps) {
   return (
-    <aside className="heroes-config-panel">
+    <aside className="heroes-config-panel shadow-container">
       <section>
         <h3>Randomization Setting</h3>
         <div className="vertical-align">
@@ -46,7 +46,7 @@ function HeroesConfigPanel({
         <div className="vertical-align">
           {ATTRIBUTE_BUTTONS.map((item) => (
             <ToggleButton
-              className="attr-buttons"
+              className={`attr-buttons attr-${item.value}`}
               activeClassName="attr-buttons-active"
               isActive={attribute.has(item.value)}
               onClick={() => updateAttribute(item.value)}

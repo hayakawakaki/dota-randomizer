@@ -17,7 +17,7 @@ export default function HeroesResult({
 }: HeroesResultProps) {
   return (
     <div className="heroes-result">
-      <div className="result-container">
+      <div className="result-container shadow-container">
         <div>
           <button className="randomize-button" onClick={randomizeHero}>
             Randomize
