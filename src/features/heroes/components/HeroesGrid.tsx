@@ -1,6 +1,6 @@
 import Loading from "@components/Loading";
-import type { HeroTypes } from "@/types/heroes";
-import "@css/components/heroes/grid.css";
+import type { HeroTypes } from "@/features/heroes/types/heroes.types";
+import "@features/heroes/styles/HeroesGrid.css";
 
 type HeroesGridProps = {
   heroData: HeroTypes[];
@@ -8,7 +8,7 @@ type HeroesGridProps = {
   error: string | null;
 };
 
-function HeroesGrid({ heroData, loading, error }: HeroesGridProps) {
+export function HeroesGrid({ heroData, loading, error }: HeroesGridProps) {
   if (loading) {
     return <Loading />;
   }
@@ -30,5 +30,3 @@ function HeroesGrid({ heroData, loading, error }: HeroesGridProps) {
     </div>
   );
 }
-
-export default HeroesGrid;

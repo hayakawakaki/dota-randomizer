@@ -1,9 +1,9 @@
 import { renderHook, act } from "@testing-library/react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { useHeroManager } from "@/hooks/useHeroManager";
-import { useFetch } from "@hooks/useFetch";
 import { HERO_COMPLEXITY, HERO_ATTRIBUTE } from "@/constant";
-import type { HeroTypes } from "@/types/heroes";
+import { useFetch } from "@hooks/useFetch";
+import { useHeroManager } from "./useHeroManager";
+import type { HeroTypes } from "@/features/heroes";
 
 vi.mock("@hooks/useFetch");
 const mockUseFetch = vi.mocked(useFetch);
@@ -58,8 +58,10 @@ describe("useHeroManager", () => {
       expect(result.current.filteredHeroes).toEqual([]);
       expect(result.current.loading).toBe(true);
       expect(result.current.error).toBeNull();
-      expect(result.current.complexity).toBe(HERO_COMPLEXITY.UNDEFINED.value);
-      expect(result.current.attribute).toEqual(new Set());
+      expect(result.current.heroComplexity).toBe(
+        HERO_COMPLEXITY.UNDEFINED.value
+      );
+      expect(result.current.heroAttribute).toEqual(new Set());
     });
 
     it("should return heroes data as is when the fetch is successful", () => {
@@ -105,12 +107,12 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.STRENGTH.value);
       });
 
-      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH.value)).toBe(
-        true
-      );
+      expect(
+        result.current.heroAttribute.has(HERO_ATTRIBUTE.STRENGTH.value)
+      ).toBe(true);
       expect(result.current.filteredHeroes).toHaveLength(1);
       expect(result.current.filteredHeroes[0].name_loc).toBe("Pudge");
     });
@@ -119,15 +121,15 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH.value);
-        result.current.updateAttribute(HERO_ATTRIBUTE.INTELLIGENCE.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.STRENGTH.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.INTELLIGENCE.value);
       });
 
-      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH.value)).toBe(
-        true
-      );
       expect(
-        result.current.attribute.has(HERO_ATTRIBUTE.INTELLIGENCE.value)
+        result.current.heroAttribute.has(HERO_ATTRIBUTE.STRENGTH.value)
+      ).toBe(true);
+      expect(
+        result.current.heroAttribute.has(HERO_ATTRIBUTE.INTELLIGENCE.value)
       ).toBe(true);
       expect(result.current.filteredHeroes).toHaveLength(2);
       expect(result.current.filteredHeroes.map((h) => h.name_loc)).toEqual(
@@ -138,19 +140,19 @@ describe("useHeroManager", () => {
     it("should toggle attribute on/off when called multiple times", () => {
       const { result } = renderHook(() => useHeroManager());
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.STRENGTH.value);
       });
-      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH.value)).toBe(
-        true
-      );
+      expect(
+        result.current.heroAttribute.has(HERO_ATTRIBUTE.STRENGTH.value)
+      ).toBe(true);
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.STRENGTH.value);
       });
 
-      expect(result.current.attribute.has(HERO_ATTRIBUTE.STRENGTH.value)).toBe(
-        false
-      );
+      expect(
+        result.current.heroAttribute.has(HERO_ATTRIBUTE.STRENGTH.value)
+      ).toBe(false);
       expect(result.current.filteredHeroes).toHaveLength(3);
     });
   });
@@ -168,10 +170,10 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateComplexity(HERO_COMPLEXITY.EASY.value);
+        result.current.updateHeroComplexity(HERO_COMPLEXITY.EASY.value);
       });
 
-      expect(result.current.complexity).toBe(HERO_COMPLEXITY.EASY.value);
+      expect(result.current.heroComplexity).toBe(HERO_COMPLEXITY.EASY.value);
       expect(result.current.filteredHeroes).toHaveLength(1);
       expect(result.current.filteredHeroes.map((h) => h.name_loc)).toEqual(
         expect.arrayContaining(["Pudge"])
@@ -182,15 +184,17 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateComplexity(HERO_COMPLEXITY.EASY.value);
+        result.current.updateHeroComplexity(HERO_COMPLEXITY.EASY.value);
       });
-      expect(result.current.complexity).toBe(HERO_COMPLEXITY.EASY.value);
+      expect(result.current.heroComplexity).toBe(HERO_COMPLEXITY.EASY.value);
 
       act(() => {
-        result.current.updateComplexity(HERO_COMPLEXITY.EASY.value);
+        result.current.updateHeroComplexity(HERO_COMPLEXITY.EASY.value);
       });
 
-      expect(result.current.complexity).toBe(HERO_COMPLEXITY.UNDEFINED.value);
+      expect(result.current.heroComplexity).toBe(
+        HERO_COMPLEXITY.UNDEFINED.value
+      );
       expect(result.current.filteredHeroes).toHaveLength(3);
     });
 
@@ -198,14 +202,14 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateComplexity(HERO_COMPLEXITY.EASY.value);
+        result.current.updateHeroComplexity(HERO_COMPLEXITY.EASY.value);
       });
 
       act(() => {
-        result.current.updateComplexity(HERO_COMPLEXITY.HARD.value);
+        result.current.updateHeroComplexity(HERO_COMPLEXITY.HARD.value);
       });
 
-      expect(result.current.complexity).toBe(HERO_COMPLEXITY.HARD.value);
+      expect(result.current.heroComplexity).toBe(HERO_COMPLEXITY.HARD.value);
       expect(result.current.filteredHeroes).toHaveLength(1);
       expect(result.current.filteredHeroes[0].name_loc).toBe("Invoker");
     });
@@ -224,8 +228,8 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTE.INTELLIGENCE.value);
-        result.current.updateComplexity(HERO_COMPLEXITY.HARD.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.INTELLIGENCE.value);
+        result.current.updateHeroComplexity(HERO_COMPLEXITY.HARD.value);
       });
 
       expect(result.current.filteredHeroes).toHaveLength(1);
@@ -236,8 +240,8 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(1);
-        result.current.updateComplexity(3);
+        result.current.updateHeroAttribute(1);
+        result.current.updateHeroComplexity(3);
       });
 
       expect(result.current.filteredHeroes).toHaveLength(0);
@@ -257,20 +261,22 @@ describe("useHeroManager", () => {
       const { result } = renderHook(() => useHeroManager());
 
       act(() => {
-        result.current.updateAttribute(HERO_ATTRIBUTE.STRENGTH.value);
-        result.current.updateAttribute(HERO_ATTRIBUTE.INTELLIGENCE.value);
-        result.current.updateComplexity(HERO_COMPLEXITY.NORMAL.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.STRENGTH.value);
+        result.current.updateHeroAttribute(HERO_ATTRIBUTE.INTELLIGENCE.value);
+        result.current.updateHeroComplexity(HERO_COMPLEXITY.NORMAL.value);
       });
 
-      expect(result.current.attribute.size).toBe(2);
-      expect(result.current.complexity).toBe(2);
+      expect(result.current.heroAttribute.size).toBe(2);
+      expect(result.current.heroComplexity).toBe(2);
 
       act(() => {
         result.current.clearFilters();
       });
 
-      expect(result.current.attribute.size).toBe(0);
-      expect(result.current.complexity).toBe(HERO_COMPLEXITY.UNDEFINED.value);
+      expect(result.current.heroAttribute.size).toBe(0);
+      expect(result.current.heroComplexity).toBe(
+        HERO_COMPLEXITY.UNDEFINED.value
+      );
       expect(result.current.filteredHeroes).toHaveLength(3);
     });
   });

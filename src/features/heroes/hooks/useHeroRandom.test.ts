@@ -1,11 +1,13 @@
 import { renderHook, act } from "@testing-library/react";
 import { describe, it, expect, afterEach, beforeEach, vi } from "vitest";
 import {
-  useHeroRandom,
-  setInitialRandomizeSettings,
-} from "@/hooks/useHeroRandom";
-import { HERO_COMPLEXITY, HERO_ATTRIBUTE, RANDOMIZE_SETTING } from "@/constant";
-import type { HeroTypes } from "@/types/heroes";
+  HERO_COMPLEXITY,
+  HERO_ATTRIBUTE,
+  HERO_RANDOMIZE_SETTING,
+} from "@/constant";
+import { useHeroRandom, setInitialRandomizeSettings } from "./useHeroRandom";
+
+import type { HeroTypes } from "@/features/heroes";
 
 const mockHeroes: HeroTypes[] = [
   {
@@ -60,7 +62,7 @@ describe("useHeroRandom", () => {
       const result = setInitialRandomizeSettings();
 
       expect(typeof result).toBe("object");
-      Object.values(RANDOMIZE_SETTING).map((item) =>
+      Object.values(HERO_RANDOMIZE_SETTING).map((item) =>
         expect(result[item.key]).toBe(item.default)
       );
     });
@@ -70,7 +72,7 @@ describe("useHeroRandom", () => {
     it("should randomize a hero from the passed hero data", () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
-      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+      const key = HERO_RANDOMIZE_SETTING.SKIPANIMATION.key;
 
       act(() => {
         result.current.updateRandomizationSetting(key);
@@ -89,7 +91,7 @@ describe("useHeroRandom", () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6).mockReturnValueOnce(0.3);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
 
-      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+      const key = HERO_RANDOMIZE_SETTING.SKIPANIMATION.key;
 
       act(() => {
         result.current.updateRandomizationSetting(key);
@@ -113,7 +115,7 @@ describe("useHeroRandom", () => {
     it("should return is isRandomizing to false after randomizing", () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
-      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+      const key = HERO_RANDOMIZE_SETTING.SKIPANIMATION.key;
 
       act(() => {
         result.current.updateRandomizationSetting(key);
@@ -132,7 +134,7 @@ describe("useHeroRandom", () => {
     it("should skip animation when SKIPANIMATION is true", async () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
-      const key = RANDOMIZE_SETTING.SKIPANIMATION.key;
+      const key = HERO_RANDOMIZE_SETTING.SKIPANIMATION.key;
 
       expect(result.current.randomizeSetting[key]).toBe(false);
 
@@ -158,7 +160,7 @@ describe("useHeroRandom", () => {
   describe("Randomization settings", () => {
     it("updateRandomizationSetting should toggle the passed key to true/false", () => {
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
-      const key = RANDOMIZE_SETTING.LANES.key;
+      const key = HERO_RANDOMIZE_SETTING.LANES.key;
       const defaultValue = result.current.randomizeSetting[key];
       act(() => {
         result.current.updateRandomizationSetting(key);
@@ -173,8 +175,8 @@ describe("useHeroRandom", () => {
     it("should randomize a lane when the randomizeSettings.LANES is set to true", () => {
       Math.random = vi.fn().mockReturnValueOnce(0.6).mockReturnValueOnce(0.3);
       const { result } = renderHook(() => useHeroRandom(mockHeroes));
-      const key = RANDOMIZE_SETTING.LANES.key;
-      const skipKey = RANDOMIZE_SETTING.SKIPANIMATION.key;
+      const key = HERO_RANDOMIZE_SETTING.LANES.key;
+      const skipKey = HERO_RANDOMIZE_SETTING.SKIPANIMATION.key;
       act(() => {
         result.current.updateRandomizationSetting(key);
         result.current.updateRandomizationSetting(skipKey);

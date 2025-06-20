@@ -1,19 +1,21 @@
-import HeroesConfigPanel from "@components/HeroesConfigPanel";
-import HeroesGrid from "@components/HeroesGrid";
 import Layout from "@components/Layout";
-import { useHeroManager } from "@hooks/useHeroManager";
-import { useHeroRandom } from "@hooks/useHeroRandom";
-import HeroesResult from "@components/HeroesResult";
+import {
+  HeroesConfigPanel,
+  HeroesGrid,
+  HeroesResult,
+  useHeroManager,
+  useHeroRandom,
+} from "@/features/heroes";
 
 function App() {
   const {
     filteredHeroes,
     loading,
     error,
-    attribute,
-    updateAttribute,
-    complexity,
-    updateComplexity,
+    heroAttribute: attribute,
+    updateHeroAttribute: updateAttribute,
+    heroComplexity: complexity,
+    updateHeroComplexity: updateComplexity,
   } = useHeroManager();
 
   const {

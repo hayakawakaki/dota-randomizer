@@ -1,24 +1,31 @@
-import ToggleButton from "@/components/ui/ToggleButton";
+import ToggleButton from "@components/ui/ToggleButton";
 import SliderCheckBox from "@components/ui/SliderCheckBox";
+
 import {
   COMPLEXITY_BUTTONS,
   ATTRIBUTE_BUTTONS,
   RANDOMIZE_SETTING_BUTTONS,
 } from "@/constant";
-import type { HeroComplexity, HeroAttribute } from "@/types/heroes";
-import type { RandomSetting, RandomSettingKey } from "@/types/randomize";
-import "@css/components/heroes/panel.css";
+
+import type {
+  HeroComplexity,
+  HeroAttribute,
+  HeroRandomizeSetting,
+  HeroRandomizeSettingKey,
+} from "@features/heroes";
+
+import "@features/heroes/styles/HeroesConfigPanel.css";
 
 type HeroesFilterProps = {
   attribute: Set<HeroAttribute>;
   updateAttribute: (value: HeroAttribute) => void;
   complexity: HeroComplexity;
   updateComplexity: (value: HeroComplexity) => void;
-  updateRandomizationSetting: (value: RandomSettingKey) => void;
-  randomizeSetting: RandomSetting;
+  updateRandomizationSetting: (value: HeroRandomizeSettingKey) => void;
+  randomizeSetting: HeroRandomizeSetting;
 };
 
-function HeroesConfigPanel({
+export function HeroesConfigPanel({
   attribute,
   updateAttribute,
   complexity,
@@ -30,7 +37,7 @@ function HeroesConfigPanel({
     <aside className="heroes-config-panel shadow-container">
       <section>
         <h3>Randomization Setting</h3>
-        <div className="vertical-align">
+        <div>
           {RANDOMIZE_SETTING_BUTTONS.map((item) => (
             <SliderCheckBox
               key={`setting-button-${item.key}`}
@@ -43,7 +50,7 @@ function HeroesConfigPanel({
       </section>
       <section>
         <h3>Attributes Filter</h3>
-        <div className="vertical-align">
+        <div>
           {ATTRIBUTE_BUTTONS.map((item) => (
             <ToggleButton
               className={`attr-buttons attr-${item.value}`}
@@ -59,12 +66,12 @@ function HeroesConfigPanel({
       </section>
       <section>
         <h3>Complexity Filter</h3>
-        <div className="vertical-align">
-          {COMPLEXITY_BUTTONS.map((item, index) => (
+        <div>
+          {COMPLEXITY_BUTTONS.map((item) => (
             <ToggleButton
               className="complexity-buttons"
               activeClassName="complexity-buttons-active"
-              isActive={complexity >= index + 1}
+              isActive={complexity >= item.value}
               onClick={() => updateComplexity(item.value)}
               key={`complexity-button-${item.label}`}
             >
@@ -79,5 +86,3 @@ function HeroesConfigPanel({
     </aside>
   );
 }
-
-export default HeroesConfigPanel;

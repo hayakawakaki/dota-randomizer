@@ -1,16 +1,16 @@
 import type { RefObject } from "react";
-import type { RandomSetting } from "@/types/randomize";
-import "@css/components/heroes/result.css";
+import type { HeroRandomizeSetting } from "@features/heroes";
+import "@features/heroes/styles/HeroesResult.css";
 
 type HeroesResultProps = {
   randomHero: string | null;
   isRandomizing: boolean;
   randomizeHero: () => void;
   randomizedLaneRef: RefObject<string | null>;
-  randomizeSetting: RandomSetting;
+  randomizeSetting: HeroRandomizeSetting;
 };
 
-export default function HeroesResult({
+export function HeroesResult({
   randomHero,
   isRandomizing,
   randomizeHero,
