@@ -1,4 +1,5 @@
 import Layout from "@components/Layout";
+import { useDevice } from "@hooks/useDevice";
 import {
   HeroesConfigPanel,
   HeroesGrid,
@@ -27,15 +28,19 @@ function App() {
     updateRandomizationSetting,
   } = useHeroRandom(filteredHeroes);
 
+  const { isDeviceAtLeast } = useDevice();
+
   return (
     <Layout>
-      <HeroesResult
-        randomHero={randomHero}
-        isRandomizing={isRandomizing}
-        randomizeHero={randomizeHero}
-        randomizeSetting={randomizeSetting}
-        randomizedLaneRef={randomizedLaneRef}
-      />
+      {!isDeviceAtLeast("LAPTOP") && (
+        <HeroesResult
+          randomHero={randomHero}
+          isRandomizing={isRandomizing}
+          randomizeHero={randomizeHero}
+          randomizeSetting={randomizeSetting}
+          randomizedLaneRef={randomizedLaneRef}
+        />
+      )}
       <HeroesConfigPanel
         randomizeSetting={randomizeSetting}
         attribute={attribute}
