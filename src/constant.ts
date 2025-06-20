@@ -12,7 +12,7 @@ export const HERO_ATTRIBUTE = {
   UNIVERSAL: { value: 4, label: "Universal", image: "universal.webp" },
 } as const;
 
-export const RANDOMIZE_SETTING = {
+export const HERO_RANDOMIZE_SETTING = {
   LANES: { key: "LANES", label: "Randomize Lanes", default: false },
   SKIPANIMATION: {
     key: "SKIPANIMATION",
@@ -21,7 +21,7 @@ export const RANDOMIZE_SETTING = {
   },
 } as const;
 
-export const LANE_NAMES = {
+export const HERO_LANES = {
   POS1: "Carry",
   POS2: "Midlane",
   POS3: "Offlane",
@@ -49,6 +49,6 @@ export const COMPLEXITY_BUTTONS = [
 ] as const;
 
 export const RANDOMIZE_SETTING_BUTTONS = [
-  RANDOMIZE_SETTING.SKIPANIMATION,
-  RANDOMIZE_SETTING.LANES,
+  HERO_RANDOMIZE_SETTING.SKIPANIMATION,
+  HERO_RANDOMIZE_SETTING.LANES,
 ];

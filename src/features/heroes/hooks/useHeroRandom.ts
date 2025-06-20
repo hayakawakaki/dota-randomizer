@@ -1,11 +1,11 @@
 import { useState, useRef, type RefObject } from "react";
-import { RANDOMIZE_SETTING, LANE_NAMES } from "@/constant";
-import type { HeroTypes } from "@/types/heroes";
+import { HERO_RANDOMIZE_SETTING, HERO_LANES } from "@/constant";
+import type { HeroTypes } from "@/features/heroes/types/heroes.types";
 import type {
   RandomSetting,
   RandomSettingKey,
   RandomLanes,
-} from "@/types/randomize";
+} from "@/features/heroes/types/randomize";
 
 type HeroRandomReturn = {
   randomHero: string | null;
@@ -18,10 +18,9 @@ type HeroRandomReturn = {
 
 export function setInitialRandomizeSettings() {
   return Object.fromEntries(
-    Object.values(RANDOMIZE_SETTING).map(({ key, default: defaultValue }) => [
-      key,
-      defaultValue,
-    ])
+    Object.values(HERO_RANDOMIZE_SETTING).map(
+      ({ key, default: defaultValue }) => [key, defaultValue]
+    )
   ) as RandomSetting;
 }
 
@@ -35,7 +34,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
   const randomizedLaneRef = useRef<RandomLanes | null>(null);
 
   function randomizeLane() {
-    const lanes = Object.values(LANE_NAMES);
+    const lanes = Object.values(HERO_LANES);
     let idx = Math.floor(Math.random() * lanes.length);
     randomizedLaneRef.current = lanes[idx];
   }
@@ -43,7 +42,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
   async function animateRandomization() {
     let heroIdx;
     let laneIdx;
-    const lanes = randomizeSetting.LANES ? Object.values(LANE_NAMES) : null;
+    const lanes = randomizeSetting.LANES ? Object.values(HERO_LANES) : null;
 
     for (let i = 0; i < 40; i++) {
       heroIdx = Math.floor(Math.random() * heroes.length);

@@ -30,7 +30,7 @@
       "@components/*": ["./src/components/*"],
       "@css/*": ["./src/assets/css/*"],
       "@fonts/*": ["./src/assets/fonts/*"],
-      "@features/*": ["./src/features"],
+      "@features/*": ["./src/features/*"],
       "@hooks/*": ["./src/hooks/*"],
       "@images/*": ["./src/assets/images/*"],
     }
