@@ -2,18 +2,18 @@ import { useState, useRef, type RefObject } from "react";
 import { HERO_RANDOMIZE_SETTING, HERO_LANES } from "@/constant";
 import type { HeroTypes } from "@/features/heroes/types/heroes.types";
 import type {
-  RandomSetting,
-  RandomSettingKey,
-  RandomLanes,
-} from "@/features/heroes/types/randomize";
+  HeroRandomizeSetting,
+  HeroRandomizeSettingKey,
+  HeroLanes,
+} from "@/features/heroes";
 
 type HeroRandomReturn = {
   randomHero: string | null;
   isRandomizing: boolean;
   randomizedLaneRef: RefObject<string | null>;
-  randomizeSetting: RandomSetting;
+  randomizeSetting: HeroRandomizeSetting;
   randomizeHero: () => void;
-  updateRandomizationSetting: (targetSetting: RandomSettingKey) => void;
+  updateRandomizationSetting: (targetSetting: HeroRandomizeSettingKey) => void;
 };
 
 export function setInitialRandomizeSettings() {
@@ -21,17 +21,16 @@ export function setInitialRandomizeSettings() {
     Object.values(HERO_RANDOMIZE_SETTING).map(
       ({ key, default: defaultValue }) => [key, defaultValue]
     )
-  ) as RandomSetting;
+  ) as HeroRandomizeSetting;
 }
 
 export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
   const [randomHero, setRandomHero] = useState<string | null>(null);
   const [isRandomizing, setIsRandomizing] = useState<boolean>(false);
-  const [randomizeSetting, setRandomizeSetting] = useState<RandomSetting>(
-    setInitialRandomizeSettings
-  );
+  const [randomizeSetting, setRandomizeSetting] =
+    useState<HeroRandomizeSetting>(setInitialRandomizeSettings);
   const lastRandomizedHeroRef = useRef<number | null>(null);
-  const randomizedLaneRef = useRef<RandomLanes | null>(null);
+  const randomizedLaneRef = useRef<HeroLanes | null>(null);
 
   function randomizeLane() {
     const lanes = Object.values(HERO_LANES);
@@ -91,7 +90,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     }
   }
 
-  function updateRandomizationSetting(targetSetting: RandomSettingKey) {
+  function updateRandomizationSetting(targetSetting: HeroRandomizeSettingKey) {
     setRandomizeSetting((prev) => ({
       ...prev,
       [targetSetting]: !prev[targetSetting],
