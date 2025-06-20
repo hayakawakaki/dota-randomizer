@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-export const DEVICES = {
+const DEVICES = {
   MOBILE: 0, //Fallback device
   TABLET: 768,
   LAPTOP: 1024,
