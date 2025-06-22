@@ -8,13 +8,19 @@
 }
 
 .result-container {
-  min-width: 30rem;
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   row-gap: 0.5rem;
+  width: 100%;
   padding: var(--padding);
+}
+
+@media screen and (min-width: 768px) {
+  .result-container {
+    min-width: 30rem;
+  }
 }
 
 .randomize-button {
