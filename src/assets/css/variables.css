@@ -7,6 +7,7 @@
   --header-height: 4rem;
   --panel-height: 17.5rem;
   --panel-buttons-height: 3rem;
+  --panel-width: 100%;
 }
 
 @media screen and (min-width: 48rem) {
@@ -14,5 +15,26 @@
     --header-height: 5rem;
     --fs-icons: 1.5rem;
     --fs-header: 1.25rem;
+    --panel-buttons-height: 3.5rem;
+    --panel-height: 19.5rem;
+    --panel-width: 28rem;
+  }
+}
+
+@media screen and (min-width: 64rem) {
+  :root {
+    --header-height: 6rem;
+    --panel-height: 7rem;
+    --panel-width: 100%;
+    --panel-buttons-height: 2.75rem;
+  }
+}
+
+@media screen and (min-width: 90rem) {
+  :root {
+    --header-height: 6rem;
+    --panel-height: 8rem;
+    --panel-width: 100%;
+    --panel-buttons-height: 3.75rem;
   }
 }

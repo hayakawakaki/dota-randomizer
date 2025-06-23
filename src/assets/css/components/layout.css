@@ -1,4 +1,5 @@
 .app-wrapper {
+  min-height: 100dvh;
   overflow: hidden;
   padding: 0 var(--padding);
   padding-top: var(--header-height);

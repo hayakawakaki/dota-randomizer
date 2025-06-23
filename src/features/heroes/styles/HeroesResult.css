@@ -1,5 +1,13 @@
 .heroes-result {
   height: 100%;
+  width: 100%;
+}
+
+@media screen and (min-width: 48rem) {
+  .heroes-result {
+    max-width: var(--panel-width);
+    margin: 0 auto;
+  }
 }
 
 .result-container {
@@ -8,15 +16,8 @@
   justify-content: center;
   align-items: center;
   row-gap: 0.5rem;
-  width: 100%;
   padding: var(--padding);
   border-radius: 0.5rem;
-}
-
-@media screen and (min-width: 768px) {
-  .result-container {
-    min-width: 30rem;
-  }
 }
 
 .randomize-button {
