@@ -1,3 +1,5 @@
+import { CodeIcon } from "@phosphor-icons/react/dist/csr/Code";
+
 export const HERO_COMPLEXITY = {
   UNDEFINED: { value: 0, label: "Default" },
   EASY: { value: 1, label: "Easy" },
@@ -30,9 +32,9 @@ export const HERO_LANES = {
 } as const;
 
 //= Links
-export const LINKS = {
-  GITHUB: "http://github.com/",
-} as const;
+export const LINKS = [
+  { label: "View Code", icon: CodeIcon, link: "https://github.com" },
+] as const;
 
 //= UI Related Constants
 export const ATTRIBUTE_BUTTONS = [
