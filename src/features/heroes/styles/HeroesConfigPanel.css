@@ -1,24 +1,80 @@
 .heroes-config-panel {
+  position: fixed;
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  min-height: var(--panel-height);
-  padding: var(--padding);
-  user-select: none;
+  row-gap: 0.2rem;
+  bottom: var(--padding);
+  left: 0;
+  right: 0;
+  padding: 0 var(--padding);
+}
 
-  & > section {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    row-gap: 0.5rem;
-    height: 100%;
+.config-panel {
+  display: flex;
+  flex-direction: column;
+  row-gap: 0.5rem;
+  height: 0;
+  width: 100%;
+  overflow: hidden;
+  background-color: rgba(10, 10, 10, 0.8);
+  border-radius: 1rem;
+  transition: height 300ms ease-in-out, padding 300ms ease-in-out, border 100ms;
+}
+
+.config-panel.visible {
+  border: 1px solid white;
+  height: var(--panel-height);
+  padding: var(--padding);
+}
+
+.config-toggle {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-width: 8rem;
+  height: 3.5rem;
+  background-color: rgba(10, 10, 10, 0.8);
+  border: 1px solid white;
+  border-radius: 1rem;
+
+  & > i {
+    font-size: 1.5rem;
   }
+}
+
+.panel {
+  text-align: center;
+  user-select: none;
+}
+
+.panel-buttons {
+  display: flex;
+
+  &.settings-panel {
+    justify-content: space-evenly;
+  }
+
+  &.attr-panel {
+    justify-content: space-evenly;
+  }
+
+  &.complexity-panel {
+    justify-content: center;
+  }
+}
+
+.setting-buttons {
+  display: flex;
+  align-items: center;
+  height: var(--panel-buttons-height);
 }
 
 .attr-buttons {
   filter: grayscale(90%);
   & > img {
-    height: 3.25rem;
+    height: var(--panel-buttons-height);
     transform: scale(0.9);
     transition: transform 150ms ease-in-out;
   }
@@ -88,7 +144,7 @@
   transition: opacity 300ms ease-in-out;
 
   & > img {
-    height: 3rem;
+    height: var(--panel-buttons-height);
     transform: scale(0.9);
     transition: transform 150ms ease-in-out;
   }

@@ -1,11 +1,67 @@
 .app-header {
   position: fixed;
+  width: full;
   inset: 0;
   height: var(--header-height);
 }
 
 .header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-height);
   max-width: 90rem;
-  padding: 0 var(--padding);
   margin: 0 auto;
+  padding: var(--padding);
+}
+
+.header-brand {
+  height: var(--header-height);
+  width: auto;
+  display: inline-flex;
+  align-items: center;
+  & > svg {
+    width: calc(var(--header-height) * 2);
+    fill: white;
+  }
+}
+
+.header-icons {
+  height: 100%;
+
+  & > a {
+    height: 100%;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transition: transform 100ms ease-in-out;
+  }
+  & > a:hover {
+    transform: scale(1.1);
+  }
+  & > a:active {
+    transform: scale(1);
+  }
+
+  & svg {
+    font-size: var(--fs-icons);
+    width: auto;
+  }
+
+  & p {
+    text-align: center;
+    letter-spacing: -1px;
+    font-size: var(--fs-header);
+  }
+}
+
+.header-title {
+  position: absolute;
+  inset: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
 }
