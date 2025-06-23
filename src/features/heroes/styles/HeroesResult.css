@@ -1,5 +1,4 @@
 .heroes-result {
-  height: 100%;
   width: 100%;
 }
 
@@ -21,17 +20,17 @@
 }
 
 .randomize-button {
-  min-width: 15rem;
-  font-size: 1.5rem;
-  border: 2px solid white;
+  min-width: 11rem;
+  font-size: 1.2rem;
+  border: 1px solid white;
   padding: 0.5rem;
 }
 
 .result-image {
-  max-width: 15rem;
+  max-width: 11rem;
 }
 
 .result-lane {
-  font-size: 2rem;
+  font-size: 1.2rem;
   font-weight: 700;
 }

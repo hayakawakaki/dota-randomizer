@@ -19,7 +19,7 @@ export function HeroesResult({
 }: HeroesResultProps) {
   return (
     <div className="heroes-result">
-      <div className="result-container shadow-container">
+      <div className="result-container container-gradient">
         <div>
           <button
             className="randomize-button"

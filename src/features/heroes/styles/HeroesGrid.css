@@ -1,25 +1,34 @@
 .heroes-container {
-  container-name: heroes-container;
+  container-name: heroes;
   container-type: inline-size;
+  max-width: 90rem;
+  flex-grow: 1;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  border-radius: 0.5rem;
+  background-color: rgba(10, 10, 10, 0.3);
 }
 
 .heroes-grid {
   display: grid;
   gap: 0.5rem;
-  grid-template-columns: repeat(5, 1fr);
-  padding: var(--padding) 0;
-  max-width: 90rem;
-  transition: all 0.3s ease;
+  grid-template-columns: repeat(4, 1fr);
+  padding: var(--padding);
 }
 
-@container heroes-container (width >= calc(48rem - 2rem)) {
+.heroes-grid-item {
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 0.5rem;
+}
+
+@container heroes (width >= calc(48rem - 2rem)) {
   .heroes-grid {
-    grid-template-columns: repeat(7, 1fr);
+    grid-template-columns: repeat(6, 1fr);
   }
 }
 
-@container heroes-container (width >= calc(75rem)) {
+@container heroes (width >= calc(64rem - 2rem)) {
   .heroes-grid {
-    grid-template-columns: repeat(8, 1fr);
+    grid-template-columns: repeat(7, 1fr);
   }
 }
