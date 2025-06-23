@@ -6,9 +6,12 @@
 }
 
 .app-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: var(--padding);
   width: 100%;
+  height: calc(100dvh - var(--header-height) - var(--padding));
   max-width: 90rem;
   margin: 0 auto;
-  padding: var(--padding) 0;
-  scroll-behavior: smooth;
+  padding: var(--padding) 0 0 0;
 }

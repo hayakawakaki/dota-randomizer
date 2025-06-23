@@ -22,6 +22,7 @@ export function HeroesGrid({ heroData, loading, error }: HeroesGridProps) {
       <div className="heroes-grid">
         {heroData.map((item) => (
           <img
+            className="heroes-grid-item"
             key={`hero-${item.id}`}
             src={`/images/heroes/${item.name}.webp`}
           />

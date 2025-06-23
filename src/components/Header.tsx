@@ -4,7 +4,7 @@ import "@css/components/header.css";
 
 function Header() {
   return (
-    <header className="app-header shadow-container">
+    <header className="app-header container-gradient">
       <div className="header-container">
         <h1 className="header-title">Dota Hero Randomizer</h1>
         <div className="header-brand">

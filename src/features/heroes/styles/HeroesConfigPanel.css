@@ -13,7 +13,7 @@
 
 @media screen and (min-width: 48rem) {
   .heroes-config-panel {
-    margin: 0 auto;
+    align-content: center;
   }
 }
 
@@ -24,9 +24,9 @@
   width: var(--panel-width);
   height: 0;
   overflow: hidden;
-  background-color: rgba(10, 10, 10, 0.8);
-  border-radius: 1rem;
   transition: height 300ms ease-in-out, padding 300ms ease-in-out, border 100ms;
+  background-color: rgba(10, 10, 10, 0.8);
+  border-radius: 0.5rem;
 }
 
 @media screen and (min-width: 64rem) {
@@ -39,7 +39,6 @@
     padding: var(--padding);
     flex-direction: row;
     justify-content: space-between;
-
     & > * {
       flex-grow: 1;
     }
@@ -75,6 +74,10 @@
 
 .panel-buttons {
   display: flex;
+
+  & > * {
+    cursor: pointer;
+  }
 
   &.settings-panel {
     justify-content: space-evenly;
