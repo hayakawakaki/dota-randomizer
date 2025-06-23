@@ -30,9 +30,11 @@ function App() {
 
   const { isDeviceAtLeast } = useDevice();
 
+  const isNonMobile = isDeviceAtLeast("LAPTOP");
+
   return (
     <Layout>
-      {!isDeviceAtLeast("LAPTOP") && (
+      {!isNonMobile && (
         <HeroesResult
           randomHero={randomHero}
           isRandomizing={isRandomizing}
@@ -42,6 +44,7 @@ function App() {
         />
       )}
       <HeroesConfigPanel
+        isNonMobile={isNonMobile}
         randomizeSetting={randomizeSetting}
         attribute={attribute}
         updateAttribute={updateAttribute}
