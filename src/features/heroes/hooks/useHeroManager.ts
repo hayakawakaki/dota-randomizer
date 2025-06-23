@@ -1,15 +1,13 @@
 import { useState, useMemo } from "react";
-import { useFetch } from "@hooks/useFetch";
+import { useSuspensedFetch } from "@hooks/useFetch";
 import type {
   HeroTypes,
   HeroComplexity,
   HeroAttribute,
-} from "@/features/heroes/types/heroes.types";
+} from "@/features/heroes";
 
 type HeroManagerReturn = {
-  filteredHeroes: HeroTypes[];
-  loading: boolean;
-  error: string | null;
+  heroes: HeroTypes[];
   heroComplexity: HeroComplexity;
   heroAttribute: Set<HeroAttribute>;
   updateHeroAttribute: (value: HeroAttribute) => void;
@@ -18,20 +16,15 @@ type HeroManagerReturn = {
 };
 
 export function useHeroManager(): HeroManagerReturn {
-  const {
-    data: heroes,
-    loading,
-    error,
-  } = useFetch<HeroTypes[]>("/api/heroes.json");
-
+  const { data } = useSuspensedFetch<HeroTypes[]>("/api/heroes.json");
   const [heroComplexity, setHeroComplexity] = useState<HeroComplexity>(0);
   const [heroAttribute, setHeroAttribute] = useState<Set<HeroAttribute>>(
     () => new Set()
   );
 
-  const filteredHeroes = useMemo(() => {
-    if (!heroes) return [];
-    let currentHeroes = heroes;
+  const heroes = useMemo(() => {
+    if (!data) return [];
+    let currentHeroes = data;
     if (currentHeroes.length === 0) return [];
 
     // Attribute filter
@@ -49,7 +42,7 @@ export function useHeroManager(): HeroManagerReturn {
     }
 
     return currentHeroes;
-  }, [heroes, heroAttribute, heroComplexity]);
+  }, [data, heroAttribute, heroComplexity]);
 
   function updateHeroAttribute(value: HeroAttribute) {
     setHeroAttribute((prev) => {
@@ -77,13 +70,11 @@ export function useHeroManager(): HeroManagerReturn {
   }
 
   return {
-    filteredHeroes,
-    loading,
-    error,
-    heroComplexity: heroComplexity,
-    heroAttribute: heroAttribute,
-    updateHeroAttribute: updateHeroAttribute,
-    updateHeroComplexity: updateHeroComplexity,
+    heroes,
+    heroComplexity,
+    heroAttribute,
+    updateHeroAttribute,
+    updateHeroComplexity,
     clearFilters,
   };
 }
