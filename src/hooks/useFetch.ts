@@ -1,59 +1,50 @@
-import { useState, useEffect, useRef } from 'react';
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
+import type { UseQueryResult } from "@tanstack/react-query";
 
-type UseFetchState<T> = {
-  data: T | null;
-  loading: boolean;
-  error: string | null;
+type UseFetchReturn<T> = {
+  data: T | undefined;
+  isLoading: boolean;
+  error: Error | null;
+};
+
+type UseSuspendedFetchReturn<T> = {
+  data: T;
+};
+
+export function useFetch<T>(url: string): UseFetchReturn<T> {
+  const { data, isLoading, error }: UseQueryResult<T, Error> = useQuery({
+    queryKey: ["fetch", url],
+    queryFn: async ({ signal }): Promise<T> => {
+      const res = await fetch(url, { signal });
+      if (!res.ok) {
+        throw new Error(`Fetch error! status: ${res.status}`);
+      }
+      const result = await res.json();
+      return result;
+    },
+    staleTime: Infinity,
+    retry: 3,
+  });
+
+  return { data, isLoading, error };
 }
 
-export function useFetch<T>(url: string): UseFetchState<T> {
-  const [data, setData] = useState<T | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-  
-  const abortControllerRef = useRef<AbortController | null>(null);
-
-  useEffect(() => {
-    async function fetchData() {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
+export function useSuspensedFetch<T>(url: string): UseSuspendedFetchReturn<T> {
+  const { data } = useSuspenseQuery({
+    queryKey: ["fetch", url],
+    queryFn: async ({ signal }): Promise<T> => {
+      const res = await fetch(url, { signal });
+      if (!res.ok) {
+        throw new Error(`Fetch error! status: ${res.status}`);
       }
+      const result = await res.json();
+      return result;
+    },
+    staleTime: Infinity,
+    retry: 3,
+  });
 
-      abortControllerRef.current = new AbortController();
-      const signal = abortControllerRef.current.signal;
-
-      setError(null);
-      setLoading(true);
-
-      try {
-        const res = await fetch(url, { signal });
-        if (!res.ok) {
-          throw new Error(`Fetch error! status: ${res.status}`);
-        }
-        const result = await res.json();
-        setData(result);
-      } catch (err) {
-        if (!signal.aborted) {
-          setError(err instanceof Error ? err.message : 'Fetch aborted');
-          console.error('Fetch failed:', err);
-        }
-      } finally {
-        if (!signal.aborted) {
-          setLoading(false);
-        }
-      }
-    }
-
-    fetchData();
-
-    return () => {
-      if (abortControllerRef.current) {
-        abortControllerRef.current.abort();
-      }
-    };
-  }, [url]);
-
-  return { data, loading, error };
+  return { data };
 }
 
 export default useFetch;
