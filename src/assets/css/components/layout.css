@@ -1,11 +1,13 @@
 .app-wrapper {
   overflow: hidden;
+  padding: 0 var(--padding);
   padding-top: var(--header-height);
 }
 
 .app-container {
   width: 100%;
-  padding: 0 var(--padding);
   max-width: 90rem;
   margin: 0 auto;
+  padding: var(--padding) 0;
+  scroll-behavior: smooth;
 }

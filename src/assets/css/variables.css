@@ -1,8 +1,18 @@
 :root {
   --padding: 1rem;
   --margin: 0.5rem;
-  --fs-header: 1.75rem;
+  --fs-icons: 1.5rem;
+  --fs-header: 0.8rem;
 
-  --header-height: 3.5rem;
-  --panel-height: 6rem;
+  --header-height: 4rem;
+  --panel-height: 17.5rem;
+  --panel-buttons-height: 3rem;
+}
+
+@media screen and (min-width: 48rem) {
+  :root {
+    --header-height: 5rem;
+    --fs-icons: 1.5rem;
+    --fs-header: 1.25rem;
+  }
 }
