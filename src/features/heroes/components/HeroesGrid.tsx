@@ -1,26 +1,15 @@
-import Loading from "@components/Loading";
-import type { HeroTypes } from "@/features/heroes/types/heroes.types";
+import type { HeroTypes } from "@/features/heroes";
 import "@features/heroes/styles/HeroesGrid.css";
 
 type HeroesGridProps = {
-  heroData: HeroTypes[];
-  loading: boolean;
-  error: string | null;
+  heroes: HeroTypes[];
 };
 
-export function HeroesGrid({ heroData, loading, error }: HeroesGridProps) {
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (error) {
-    return <div>Error : {error}</div>;
-  }
-
+export function HeroesGrid({ heroes }: HeroesGridProps) {
   return (
     <div className="heroes-container">
       <div className="heroes-grid">
-        {heroData.map((item) => (
+        {heroes.map((item) => (
           <img
             className="heroes-grid-item"
             key={`hero-${item.id}`}
