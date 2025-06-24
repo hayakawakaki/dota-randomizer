@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useSuspensedFetch } from "@hooks/useFetch";
+import { useSuspenseFetch } from "@hooks/useFetch";
 import type {
   HeroTypes,
   HeroComplexity,
@@ -16,7 +16,7 @@ type HeroManagerReturn = {
 };
 
 export function useHeroManager(): HeroManagerReturn {
-  const { data } = useSuspensedFetch<HeroTypes[]>("/api/heroes.json");
+  const { data } = useSuspenseFetch<HeroTypes[]>("/api/heroes.json");
   const [heroComplexity, setHeroComplexity] = useState<HeroComplexity>(0);
   const [heroAttribute, setHeroAttribute] = useState<Set<HeroAttribute>>(
     () => new Set()

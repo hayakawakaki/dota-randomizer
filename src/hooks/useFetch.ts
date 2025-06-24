@@ -3,12 +3,8 @@ import type { UseQueryResult } from "@tanstack/react-query";
 
 type UseFetchReturn<T> = {
   data: T | undefined;
-  isLoading: boolean;
-  error: Error | null;
-};
-
-type UseSuspendedFetchReturn<T> = {
-  data: T;
+  isLoading?: boolean;
+  error?: Error | null;
 };
 
 export function useFetch<T>(url: string): UseFetchReturn<T> {
@@ -29,8 +25,8 @@ export function useFetch<T>(url: string): UseFetchReturn<T> {
   return { data, isLoading, error };
 }
 
-export function useSuspensedFetch<T>(url: string): UseSuspendedFetchReturn<T> {
-  const { data } = useSuspenseQuery({
+export function useSuspenseFetch<T>(url: string): UseFetchReturn<T> {
+  const { data, isLoading, error } = useSuspenseQuery({
     queryKey: ["fetch", url],
     queryFn: async ({ signal }): Promise<T> => {
       const res = await fetch(url, { signal });
@@ -44,7 +40,7 @@ export function useSuspensedFetch<T>(url: string): UseSuspendedFetchReturn<T> {
     retry: 3,
   });
 
-  return { data };
+  return { data, isLoading, error };
 }
 
 export default useFetch;
