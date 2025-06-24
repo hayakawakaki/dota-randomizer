@@ -26,7 +26,7 @@ type HeroesFilterProps = {
   updateComplexity: (value: HeroComplexity) => void;
   updateRandomizationSetting: (value: HeroRandomizeSettingKey) => void;
   randomizeSetting: HeroRandomizeSetting;
-  isNonMobile: boolean;
+  isMobile: boolean;
 };
 
 export function HeroesConfigPanel({
@@ -36,13 +36,13 @@ export function HeroesConfigPanel({
   updateComplexity,
   updateRandomizationSetting,
   randomizeSetting,
-  isNonMobile,
+  isMobile,
 }: HeroesFilterProps) {
   const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
 
   return (
     <div className="heroes-config-panel">
-      {!isNonMobile && (
+      {isMobile && (
         <ToggleButton
           className="config-toggle"
           onClick={() => setIsPanelOpen(!isPanelOpen)}
@@ -100,7 +100,7 @@ export function HeroesConfigPanel({
             ))}
           </div>
         </section>
-        {isNonMobile && <button style={{ flexGrow: "3" }}>Randomize</button>}
+        {!isMobile && <button style={{ flexGrow: "3" }}>Randomize</button>}
       </aside>
     </div>
   );

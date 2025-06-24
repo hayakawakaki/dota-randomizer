@@ -1,12 +1,14 @@
-import { renderHook, act } from "@testing-library/react";
+import { render, screen, renderHook, act } from "@testing-library/react";
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
 import { HERO_COMPLEXITY, HERO_ATTRIBUTE } from "@/constant";
-import { useFetch } from "@hooks/useFetch";
+import { useSuspenseFetch } from "@hooks/useFetch";
 import { useHeroManager } from "./useHeroManager";
 import type { HeroTypes } from "@/features/heroes";
+import { ErrorBoundary } from "react-error-boundary";
+import { HeroesComponent } from "@/features/heroes";
 
 vi.mock("@hooks/useFetch");
-const mockUseFetch = vi.mocked(useFetch);
+const mockUseFetch = vi.mocked(useSuspenseFetch);
 
 const mockHeroes: HeroTypes[] = [
   {
@@ -49,15 +51,11 @@ describe("useHeroManager", () => {
     it("should return the initial state values", () => {
       mockUseFetch.mockReturnValue({
         data: null,
-        loading: true,
-        error: null,
       });
 
       const { result } = renderHook(() => useHeroManager());
 
-      expect(result.current.filteredHeroes).toEqual([]);
-      expect(result.current.loading).toBe(true);
-      expect(result.current.error).toBeNull();
+      expect(result.current.heroes).toEqual([]);
       expect(result.current.heroComplexity).toBe(
         HERO_COMPLEXITY.UNDEFINED.value
       );
@@ -67,30 +65,27 @@ describe("useHeroManager", () => {
     it("should return heroes data as is when the fetch is successful", () => {
       mockUseFetch.mockReturnValue({
         data: mockHeroes,
-        loading: false,
-        error: null,
       });
 
       const { result } = renderHook(() => useHeroManager());
 
-      expect(result.current.filteredHeroes).toEqual(mockHeroes);
-      expect(result.current.loading).toBe(false);
-      expect(result.current.error).toBeNull();
+      expect(result.current.heroes).toEqual(mockHeroes);
     });
 
-    it("should return an error state when it fails", () => {
+    it("should trigger ErrorBoundary when fetching heroes fails", () => {
       const errorMessage = "Fetching heroes failed";
-      mockUseFetch.mockReturnValue({
-        data: null,
-        loading: false,
-        error: errorMessage,
+
+      mockUseFetch.mockImplementation(() => {
+        throw new Error(errorMessage);
       });
 
-      const { result } = renderHook(() => useHeroManager());
+      render(
+        <ErrorBoundary fallback={<div>Failed to load heroes</div>}>
+          <HeroesComponent isMobile={false} />
+        </ErrorBoundary>
+      );
 
-      expect(result.current.filteredHeroes).toEqual([]);
-      expect(result.current.loading).toBe(false);
-      expect(result.current.error).toBe(errorMessage);
+      expect(screen.getByText("Failed to load heroes")).toBeInTheDocument();
     });
   });
 
@@ -98,8 +93,6 @@ describe("useHeroManager", () => {
     beforeEach(() => {
       mockUseFetch.mockReturnValue({
         data: mockHeroes,
-        loading: false,
-        error: null,
       });
     });
 
@@ -113,8 +106,8 @@ describe("useHeroManager", () => {
       expect(
         result.current.heroAttribute.has(HERO_ATTRIBUTE.STRENGTH.value)
       ).toBe(true);
-      expect(result.current.filteredHeroes).toHaveLength(1);
-      expect(result.current.filteredHeroes[0].name_loc).toBe("Pudge");
+      expect(result.current.heroes).toHaveLength(1);
+      expect(result.current.heroes[0].name_loc).toBe("Pudge");
     });
 
     it("should filter heroes by multiple attributes", () => {
@@ -131,8 +124,8 @@ describe("useHeroManager", () => {
       expect(
         result.current.heroAttribute.has(HERO_ATTRIBUTE.INTELLIGENCE.value)
       ).toBe(true);
-      expect(result.current.filteredHeroes).toHaveLength(2);
-      expect(result.current.filteredHeroes.map((h) => h.name_loc)).toEqual(
+      expect(result.current.heroes).toHaveLength(2);
+      expect(result.current.heroes.map((h) => h.name_loc)).toEqual(
         expect.arrayContaining(["Pudge", "Invoker"])
       );
     });
@@ -153,7 +146,7 @@ describe("useHeroManager", () => {
       expect(
         result.current.heroAttribute.has(HERO_ATTRIBUTE.STRENGTH.value)
       ).toBe(false);
-      expect(result.current.filteredHeroes).toHaveLength(3);
+      expect(result.current.heroes).toHaveLength(3);
     });
   });
 
@@ -161,8 +154,6 @@ describe("useHeroManager", () => {
     beforeEach(() => {
       mockUseFetch.mockReturnValue({
         data: mockHeroes,
-        loading: false,
-        error: null,
       });
     });
 
@@ -174,8 +165,8 @@ describe("useHeroManager", () => {
       });
 
       expect(result.current.heroComplexity).toBe(HERO_COMPLEXITY.EASY.value);
-      expect(result.current.filteredHeroes).toHaveLength(1);
-      expect(result.current.filteredHeroes.map((h) => h.name_loc)).toEqual(
+      expect(result.current.heroes).toHaveLength(1);
+      expect(result.current.heroes.map((h) => h.name_loc)).toEqual(
         expect.arrayContaining(["Pudge"])
       );
     });
@@ -195,7 +186,7 @@ describe("useHeroManager", () => {
       expect(result.current.heroComplexity).toBe(
         HERO_COMPLEXITY.UNDEFINED.value
       );
-      expect(result.current.filteredHeroes).toHaveLength(3);
+      expect(result.current.heroes).toHaveLength(3);
     });
 
     it("should change complexity filter when different value is selected", () => {
@@ -210,8 +201,8 @@ describe("useHeroManager", () => {
       });
 
       expect(result.current.heroComplexity).toBe(HERO_COMPLEXITY.HARD.value);
-      expect(result.current.filteredHeroes).toHaveLength(1);
-      expect(result.current.filteredHeroes[0].name_loc).toBe("Invoker");
+      expect(result.current.heroes).toHaveLength(1);
+      expect(result.current.heroes[0].name_loc).toBe("Invoker");
     });
   });
 
@@ -219,8 +210,6 @@ describe("useHeroManager", () => {
     beforeEach(() => {
       mockUseFetch.mockReturnValue({
         data: mockHeroes,
-        loading: false,
-        error: null,
       });
     });
 
@@ -232,8 +221,8 @@ describe("useHeroManager", () => {
         result.current.updateHeroComplexity(HERO_COMPLEXITY.HARD.value);
       });
 
-      expect(result.current.filteredHeroes).toHaveLength(1);
-      expect(result.current.filteredHeroes[0].name_loc).toBe("Invoker");
+      expect(result.current.heroes).toHaveLength(1);
+      expect(result.current.heroes[0].name_loc).toBe("Invoker");
     });
 
     it("should return empty array when filters match no heroes", () => {
@@ -244,7 +233,7 @@ describe("useHeroManager", () => {
         result.current.updateHeroComplexity(3);
       });
 
-      expect(result.current.filteredHeroes).toHaveLength(0);
+      expect(result.current.heroes).toHaveLength(0);
     });
   });
 
@@ -252,8 +241,6 @@ describe("useHeroManager", () => {
     beforeEach(() => {
       mockUseFetch.mockReturnValue({
         data: mockHeroes,
-        loading: false,
-        error: null,
       });
     });
 
@@ -277,7 +264,7 @@ describe("useHeroManager", () => {
       expect(result.current.heroComplexity).toBe(
         HERO_COMPLEXITY.UNDEFINED.value
       );
-      expect(result.current.filteredHeroes).toHaveLength(3);
+      expect(result.current.heroes).toHaveLength(3);
     });
   });
 });
