@@ -1,7 +1,9 @@
+import { useState } from "react";
+import { useDeviceContext } from "@/hooks/device";
+
 import ToggleButton from "@components/ui/ToggleButton";
 import SliderCheckBox from "@components/ui/SliderCheckBox";
-import { CaretUpIcon } from "@phosphor-icons/react/dist/ssr";
-import { CaretDownIcon } from "@phosphor-icons/react/dist/ssr";
+import { CaretUpIcon, CaretDownIcon } from "@phosphor-icons/react/dist/ssr";
 
 import {
   COMPLEXITY_BUTTONS,
@@ -17,7 +19,6 @@ import type {
 } from "@features/heroes";
 
 import "@features/heroes/styles/HeroesConfigPanel.css";
-import { useState } from "react";
 
 type HeroesFilterProps = {
   attribute: Set<HeroAttribute>;
@@ -36,9 +37,9 @@ export function HeroesConfigPanel({
   updateComplexity,
   updateRandomizationSetting,
   randomizeSetting,
-  isMobile,
 }: HeroesFilterProps) {
   const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
+  const { isMobile } = useDeviceContext();
 
   return (
     <div className="heroes-config-panel">
