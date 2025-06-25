@@ -27,7 +27,6 @@ type HeroesFilterProps = {
   updateComplexity: (value: HeroComplexity) => void;
   updateRandomizationSetting: (value: HeroRandomizeSettingKey) => void;
   randomizeSetting: HeroRandomizeSetting;
-  isMobile: boolean;
 };
 
 export function HeroesConfigPanel({
