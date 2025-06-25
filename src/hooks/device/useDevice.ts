@@ -1,18 +1,5 @@
+import { DEVICES, type DeviceType, type useDeviceReturn } from "./device.types";
 import { useState, useEffect } from "react";
-
-const DEVICES = {
-  MOBILE: 0, //Fallback device
-  TABLET: 768,
-  LAPTOP: 1024,
-  DESKTOP: 1440,
-};
-
-type DeviceType = keyof typeof DEVICES;
-
-type useDeviceReturn = {
-  currentDevice: DeviceType;
-  isDeviceAtLeast: (device: DeviceType) => boolean;
-};
 
 export function useDevice(): useDeviceReturn {
   const [currentDevice, setCurrentDevice] = useState<DeviceType>("MOBILE");
@@ -44,8 +31,13 @@ export function useDevice(): useDeviceReturn {
     return DEVICES[currentDevice] >= DEVICES[device];
   }
 
+  const isMobile = !isDeviceAtLeast("LAPTOP");
+  const isNonMobile = isDeviceAtLeast("LAPTOP");
+
   return {
     currentDevice,
     isDeviceAtLeast,
+    isMobile,
+    isNonMobile,
   };
 }

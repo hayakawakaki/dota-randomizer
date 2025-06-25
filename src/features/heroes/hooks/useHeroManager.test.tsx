@@ -81,7 +81,7 @@ describe("useHeroManager", () => {
 
       render(
         <ErrorBoundary fallback={<div>Failed to load heroes</div>}>
-          <HeroesComponent isMobile={false} />
+          <HeroesComponent />
         </ErrorBoundary>
       );
 

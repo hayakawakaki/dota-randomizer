@@ -6,11 +6,9 @@ import {
   useHeroRandom,
 } from "@/features/heroes";
 
-type HeroesComponentProps = {
-  isMobile: boolean;
-};
+import { useDeviceContext } from "@/hooks/device";
 
-export function HeroesComponent({ isMobile }: HeroesComponentProps) {
+export function HeroesComponent() {
   const {
     heroes,
     heroAttribute,
@@ -28,6 +26,8 @@ export function HeroesComponent({ isMobile }: HeroesComponentProps) {
     updateRandomizationSetting,
   } = useHeroRandom(heroes);
 
+  const { isMobile } = useDeviceContext();
+
   return (
     <>
       {isMobile ? (
@@ -41,7 +41,6 @@ export function HeroesComponent({ isMobile }: HeroesComponentProps) {
       ) : null}
 
       <HeroesConfigPanel
-        isMobile={isMobile}
         randomizeSetting={randomizeSetting}
         attribute={heroAttribute}
         updateAttribute={updateHeroAttribute}
