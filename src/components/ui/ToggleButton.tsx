@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-type ToggleButtonProps = {
+export type ToggleButtonProps = {
   children?: ReactNode;
   onClick: () => void;
   className?: string;
@@ -8,7 +8,7 @@ type ToggleButtonProps = {
   activeClassName?: string;
 };
 
-function ToggleButton({
+export function ToggleButton({
   children,
   onClick,
   className,
