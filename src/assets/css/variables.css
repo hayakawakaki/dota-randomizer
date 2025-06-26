@@ -25,7 +25,7 @@
 @media screen and (min-width: 64rem) {
   :root {
     --header-height: 6rem;
-    --panel-height: 7rem;
+    --panel-height: 6.5rem;
     --panel-width: 100%;
     --panel-buttons-height: 2.75rem;
   }
@@ -34,7 +34,7 @@
 @media screen and (min-width: 90rem) {
   :root {
     --header-height: 6rem;
-    --panel-height: 8rem;
+    --panel-height: 7.5rem;
     --panel-buttons-height: 3.75rem;
   }
 }
