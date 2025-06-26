@@ -72,6 +72,11 @@
   user-select: none;
 }
 
+.panel-label {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
 .panel-buttons {
   display: flex;
   align-items: center;
