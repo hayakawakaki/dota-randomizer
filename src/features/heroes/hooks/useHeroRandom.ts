@@ -9,6 +9,7 @@ import type {
 
 export type HeroRandomReturn = {
   randomHero: string | null;
+  heroNameRef: RefObject<string | null>;
   isRandomizing: boolean;
   randomizedLaneRef: RefObject<string | null>;
   randomizeSetting: HeroRandomizeSetting;
@@ -31,6 +32,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     useState<HeroRandomizeSetting>(setInitialRandomizeSettings);
   const lastRandomizedHeroRef = useRef<number | null>(null);
   const randomizedLaneRef = useRef<HeroLanes | null>(null);
+  const heroNameRef = useRef<string | null>("Unknown Hero");
 
   function randomizeLane() {
     const lanes = Object.values(HERO_LANES);
@@ -51,6 +53,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
       });
 
       setRandomHero(heroes[heroIdx].name);
+      heroNameRef.current = heroes[heroIdx].name_loc;
 
       if (lanes) {
         laneIdx = Math.floor(Math.random() * lanes.length);
@@ -80,6 +83,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     // Set result
     lastRandomizedHeroRef.current = idx;
     setRandomHero(heroes[idx].name);
+    heroNameRef.current = heroes[idx].name_loc;
 
     // Randomize lanes setting
     if (randomizeSetting.LANES === true) {
@@ -102,6 +106,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     isRandomizing,
     randomizedLaneRef,
     randomizeSetting,
+    heroNameRef,
     randomizeHero,
     updateRandomizationSetting,
   };
