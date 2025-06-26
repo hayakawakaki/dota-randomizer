@@ -2,7 +2,7 @@
 export { HeroesConfigPanel } from "./components/HeroesConfigPanel";
 export { HeroesGrid } from "./components/HeroesGrid";
 export { HeroesResult } from "./components/HeroesResult";
-export { HeroesComponent } from "./components/Heroes";
+export { HeroesComponent } from "./components/HeroesComponent";
 
 // Hooks
 export { useHeroManager, type HeroManagerReturn } from "./hooks/useHeroManager";
