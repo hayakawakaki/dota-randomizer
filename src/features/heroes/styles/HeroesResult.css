@@ -22,7 +22,7 @@
   bottom: 50% !important;
   transform: translate(-50%, 50%) !important;
   width: calc(100vw - calc(var(--padding) * 2)) !important;
-  height: 50vh !important;
+  height: 60vh !important;
 }
 
 .modal-item {
@@ -64,7 +64,7 @@
 .random-button {
   border: 1px solid white;
   border-radius: 1rem;
-  padding: 1.25rem;
+  padding: 1rem 1.25rem;
   background-color: rgba(10, 10, 10, 0.25);
   font-size: 1.5rem;
 }
