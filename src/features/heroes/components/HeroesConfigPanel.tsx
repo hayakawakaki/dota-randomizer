@@ -40,7 +40,6 @@ export function HeroesConfigPanel() {
           data={RANDOMIZE_SETTING_BUTTONS}
           renderItem={(item) => (
             <SliderCheckBox
-              className="setting-buttons"
               key={`setting-button-${item.key}`}
               label={item.label}
               checked={randomizeSetting[item.key]}
@@ -83,7 +82,6 @@ export function HeroesConfigPanel() {
             </ToggleButton>
           )}
         />
-        {!isMobile && <button style={{ flexGrow: "3" }}>Randomize</button>}
       </div>
     </aside>
   );
