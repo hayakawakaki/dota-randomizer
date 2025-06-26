@@ -1,11 +1,11 @@
-type SliderCheckBoxProps = {
+export type SliderCheckBoxProps = {
   label: string;
   checked: boolean;
   onChange: () => void;
   className?: string;
 };
 
-function SliderCheckBox({
+export function SliderCheckBox({
   label,
   checked,
   onChange,
@@ -18,5 +18,3 @@ function SliderCheckBox({
     </label>
   );
 }
-
-export default SliderCheckBox;

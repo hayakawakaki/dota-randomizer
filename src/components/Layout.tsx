@@ -1,4 +1,4 @@
-import Background from "@components/ui/Background";
+import { Background } from "@components/ui";
 import Header from "@components/Header";
 import "@css/components/layout.css";
 

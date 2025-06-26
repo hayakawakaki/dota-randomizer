@@ -6,7 +6,7 @@ import type {
   HeroAttribute,
 } from "@/features/heroes";
 
-type HeroManagerReturn = {
+export type HeroManagerReturn = {
   heroes: HeroTypes[];
   heroComplexity: HeroComplexity;
   heroAttribute: Set<HeroAttribute>;

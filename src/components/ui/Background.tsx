@@ -6,7 +6,7 @@ type RGBAColor = `rgba(${number}, ${number}, ${number}, ${number})`;
 type HSLColor = `hsl(${number}, ${number}%, ${number}%)`;
 type HSLAColor = `hsla(${number}, ${number}%, ${number}%, ${number})`;
 
-type BackgroundProps = {
+export type BackgroundProps = {
   color?: HexColor | RGBColor | RGBAColor | HSLColor | HSLAColor;
   image?: string;
   opacity?: number;
@@ -16,7 +16,7 @@ type BackgroundProps = {
   zIndex?: number;
 };
 
-function Background({
+export function Background({
   color,
   image,
   opacity,
@@ -48,5 +48,3 @@ function Background({
 
   return <div style={backgroundStyle()} />;
 }
-
-export default Background;

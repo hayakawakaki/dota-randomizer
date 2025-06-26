@@ -172,19 +172,19 @@
 
   & > img {
     height: var(--panel-buttons-height);
-    transform: scale(0.9);
+    transform: scale(0.8);
     transition: transform 150ms ease-in-out;
   }
 
   &:hover {
     & > img {
-      transform: scale(1);
+      transform: scale(0.9);
     }
   }
 
   &:active {
     opacity: 1;
-    transform: scale(0.9);
+    transform: scale(0.8);
   }
 }
 
