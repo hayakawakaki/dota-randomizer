@@ -4,7 +4,13 @@
   align-items: center;
   height: 2rem;
   column-gap: 0.2rem;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
+}
+
+@media screen and (min-width: 64rem) {
+  .switch {
+    font-size: 0.85rem;
+  }
 }
 
 .switch input {
