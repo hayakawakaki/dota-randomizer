@@ -7,7 +7,7 @@ import type {
   HeroLanes,
 } from "@/features/heroes";
 
-type HeroRandomReturn = {
+export type HeroRandomReturn = {
   randomHero: string | null;
   isRandomizing: boolean;
   randomizedLaneRef: RefObject<string | null>;

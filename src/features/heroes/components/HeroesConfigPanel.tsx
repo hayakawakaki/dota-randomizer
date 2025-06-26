@@ -1,46 +1,30 @@
 import { useState } from "react";
 import { useDeviceContext } from "@/hooks/device";
+import { useHeroContext } from "@/features/heroes";
 import { ToggleButton, SliderCheckBox } from "@components/ui";
-import { Panel } from "./Panel";
+import { ConfigPanelSection } from "./ConfigPanelSection";
 import { CaretUpIcon, CaretDownIcon } from "@phosphor-icons/react/dist/ssr";
-
 import {
   COMPLEXITY_BUTTONS,
   ATTRIBUTE_BUTTONS,
   RANDOMIZE_SETTING_BUTTONS,
 } from "@/constant";
-
-import type {
-  HeroComplexity,
-  HeroAttribute,
-  HeroRandomizeSetting,
-  HeroRandomizeSettingKey,
-} from "@features/heroes";
-
 import "@features/heroes/styles/HeroesConfigPanel.css";
 
-type HeroesFilterProps = {
-  attribute: Set<HeroAttribute>;
-  updateAttribute: (value: HeroAttribute) => void;
-  complexity: HeroComplexity;
-  updateComplexity: (value: HeroComplexity) => void;
-  updateRandomizationSetting: (value: HeroRandomizeSettingKey) => void;
-  randomizeSetting: HeroRandomizeSetting;
-};
-
-export function HeroesConfigPanel({
-  attribute,
-  updateAttribute,
-  complexity,
-  updateComplexity,
-  updateRandomizationSetting,
-  randomizeSetting,
-}: HeroesFilterProps) {
+export function HeroesConfigPanel() {
   const [isPanelOpen, setIsPanelOpen] = useState<boolean>(false);
   const { isMobile } = useDeviceContext();
+  const {
+    heroAttribute,
+    updateHeroAttribute,
+    heroComplexity,
+    updateHeroComplexity,
+    updateRandomizationSetting,
+    randomizeSetting,
+  } = useHeroContext();
 
   return (
-    <div className="heroes-config-panel">
+    <aside className="heroes-config-panel">
       {isMobile && (
         <ToggleButton
           className="config-toggle"
@@ -49,8 +33,9 @@ export function HeroesConfigPanel({
           <i>{isPanelOpen ? <CaretDownIcon /> : <CaretUpIcon />}</i>
         </ToggleButton>
       )}
-      <aside className={isPanelOpen ? "config-panel visible" : "config-panel"}>
-        <Panel
+      <div className={isPanelOpen ? "config-panel visible" : "config-panel"}>
+        <ConfigPanelSection
+          className="settings-panel"
           label="Randomization Setting"
           data={RANDOMIZE_SETTING_BUTTONS}
           renderItem={(item) => (
@@ -63,30 +48,32 @@ export function HeroesConfigPanel({
             />
           )}
         />
-        <Panel
+        <ConfigPanelSection
+          className="attr-panel"
           label="Attributes Filter"
           data={ATTRIBUTE_BUTTONS}
           renderItem={(item) => (
             <ToggleButton
               className={`attr-buttons attr-${item.value}`}
               activeClassName="attr-buttons-active"
-              isActive={attribute.has(item.value)}
-              onClick={() => updateAttribute(item.value)}
+              isActive={heroAttribute.has(item.value)}
+              onClick={() => updateHeroAttribute(item.value)}
               key={`attr-button-${item.label}`}
             >
               <img src={`/images/attr/${item.image}`} />
             </ToggleButton>
           )}
         />
-        <Panel
+        <ConfigPanelSection
+          className="complexity-panel"
           label="Complexity Filter"
           data={COMPLEXITY_BUTTONS}
           renderItem={(item) => (
             <ToggleButton
               className="complexity-buttons"
               activeClassName="complexity-buttons-active"
-              isActive={complexity >= item.value}
-              onClick={() => updateComplexity(item.value)}
+              isActive={heroComplexity >= item.value}
+              onClick={() => updateHeroComplexity(item.value)}
               key={`complexity-button-${item.label}`}
             >
               <img
@@ -97,7 +84,7 @@ export function HeroesConfigPanel({
           )}
         />
         {!isMobile && <button style={{ flexGrow: "3" }}>Randomize</button>}
-      </aside>
-    </div>
+      </div>
+    </aside>
   );
 }

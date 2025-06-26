@@ -1,22 +1,15 @@
-import type { RefObject } from "react";
-import type { HeroRandomizeSetting } from "@features/heroes";
+import { useHeroContext } from "@/features/heroes";
 import "@features/heroes/styles/HeroesResult.css";
 
-type HeroesResultProps = {
-  randomHero: string | null;
-  isRandomizing: boolean;
-  randomizeHero: () => void;
-  randomizedLaneRef: RefObject<string | null>;
-  randomizeSetting: HeroRandomizeSetting;
-};
+export function HeroesResult() {
+  const {
+    randomHero,
+    isRandomizing,
+    randomizeHero,
+    randomizedLaneRef,
+    randomizeSetting,
+  } = useHeroContext();
 
-export function HeroesResult({
-  randomHero,
-  isRandomizing,
-  randomizeHero,
-  randomizedLaneRef,
-  randomizeSetting,
-}: HeroesResultProps) {
   return (
     <div className="heroes-result">
       <div className="result-container container-gradient">

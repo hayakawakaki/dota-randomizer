@@ -1,11 +1,9 @@
-import type { HeroTypes } from "@/features/heroes";
 import "@features/heroes/styles/HeroesGrid.css";
+import { useHeroContext } from "@/features/heroes";
 
-type HeroesGridProps = {
-  heroes: HeroTypes[];
-};
+export function HeroesGrid() {
+  const { heroes } = useHeroContext();
 
-export function HeroesGrid({ heroes }: HeroesGridProps) {
   return (
     <div className="heroes-container">
       <div className="heroes-grid">
