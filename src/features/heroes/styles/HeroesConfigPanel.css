@@ -19,7 +19,7 @@
   height: 0;
   overflow: hidden;
   transition: height 300ms ease-in-out, padding 300ms ease-in-out, border 100ms;
-  background-color: rgba(10, 10, 10, 0.8);
+  background-color: rgba(10, 10, 10, 0.9);
   border-radius: 0.5rem;
 }
 

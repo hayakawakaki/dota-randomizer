@@ -7,9 +7,9 @@ export function HeroesComponent() {
 
   return (
     <HeroProvider>
-      {isMobile && <HeroesResult />}
       <HeroesConfigPanel />
       <HeroesGrid />
+      <HeroesResult />
     </HeroProvider>
   );
 }
