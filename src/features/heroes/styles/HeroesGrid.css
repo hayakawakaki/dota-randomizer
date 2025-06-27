@@ -16,11 +16,6 @@
   padding: var(--padding);
 }
 
-.heroes-grid-item {
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 0.5rem;
-}
-
 @container heroes (width >= calc(48rem - 2rem)) {
   .heroes-grid {
     grid-template-columns: repeat(6, 1fr);
