@@ -1,5 +1,6 @@
 import "@features/heroes/styles/HeroesGrid.css";
 import { useHeroContext } from "@/features/heroes";
+import { HeroIcon } from "@/features/heroes";
 
 export function HeroesGrid() {
   const { heroes } = useHeroContext();
@@ -8,10 +9,11 @@ export function HeroesGrid() {
     <div className="heroes-container">
       <div className="heroes-grid">
         {heroes.map((item) => (
-          <img
-            className="heroes-grid-item"
+          <HeroIcon
             key={`hero-${item.id}`}
-            src={`/images/heroes/${item.name}.webp`}
+            heroName={item.name_english_loc}
+            imageName={item.name}
+            attrID={item.primary_attr}
           />
         ))}
       </div>

@@ -59,7 +59,7 @@ export function HeroesConfigPanel() {
               onClick={() => updateHeroAttribute(item.value)}
               key={`attr-button-${item.label}`}
             >
-              <img src={`/images/attr/${item.image}`} />
+              <img src={`/images/attr/${item.value}.webp`} />
             </ToggleButton>
           )}
         />

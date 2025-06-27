@@ -1,6 +1,7 @@
-import { useHeroContext } from "@/features/heroes";
+import { useHeroContext, HeroIcon } from "@/features/heroes";
 import "@features/heroes/styles/HeroesResult.css";
 import { useState } from "react";
+import { XIcon } from "@phosphor-icons/react/dist/ssr";
 
 export function HeroesResult() {
   const {
@@ -47,21 +48,12 @@ export function HeroesResult() {
           onClick={handleClose}
           disabled={isRandomizing}
         >
-          X
+          <XIcon />
         </button>
       ) : null}
       {isOpen ? (
         <div className="modal-item">
-          <img
-            className="modal-image"
-            src={
-              randomHero !== null
-                ? `/images/heroes/${randomHero}.webp`
-                : "https://upload.wikimedia.org/wikipedia/commons/6/6a/A_blank_flag.png"
-            }
-            alt="randomized hero"
-          />
-          <p className="modal-name">{heroNameRef.current}</p>
+          <HeroIcon imageName={randomHero} heroName={heroNameRef.current} />
           {randomizeSetting["LANES"] && randomizedLaneRef.current && (
             <p className="result-lane">{randomizedLaneRef.current}</p>
           )}

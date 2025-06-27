@@ -22,7 +22,7 @@
   bottom: 50% !important;
   transform: translate(-50%, 50%) !important;
   width: calc(100vw - calc(var(--padding) * 2)) !important;
-  height: 60vh !important;
+  height: 50vh !important;
 }
 
 .modal-item {
@@ -42,10 +42,9 @@
 
 .modal-close {
   position: absolute;
-  top: 1rem;
-  right: 1.5rem;
-  width: 100%;
-  text-align: right;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 2rem;
 }
 
 .modal-image {
@@ -67,6 +66,7 @@
   padding: 1rem 1.25rem;
   background-color: rgba(10, 10, 10, 0.25);
   font-size: 1.5rem;
+  min-width: 14rem;
 }
 
 @media screen and (min-width: 48rem) {
@@ -88,6 +88,12 @@
 
   .random-button {
     padding: 1.5rem;
+  }
+
+  .modal-close {
+    top: 0.5rem;
+    right: 1rem;
+    font-size: 2.5rem;
   }
 }
 

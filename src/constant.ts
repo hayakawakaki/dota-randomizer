@@ -8,10 +8,10 @@ export const HERO_COMPLEXITY = {
 } as const;
 
 export const HERO_ATTRIBUTE = {
-  STRENGTH: { value: 1, label: "Strength", image: "strength.webp" },
-  AGILITY: { value: 2, label: "Agility", image: "agility.webp" },
-  INTELLIGENCE: { value: 3, label: "Intelligence", image: "intelligence.webp" },
-  UNIVERSAL: { value: 4, label: "Universal", image: "universal.webp" },
+  STRENGTH: { value: 1, label: "Strength" },
+  AGILITY: { value: 2, label: "Agility" },
+  INTELLIGENCE: { value: 3, label: "Intelligence" },
+  UNIVERSAL: { value: 4, label: "Universal" },
 } as const;
 
 export const HERO_RANDOMIZE_SETTING = {
