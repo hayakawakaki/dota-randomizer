@@ -9,9 +9,6 @@
   max-width: 20rem;
   transition: transform 200ms ease-in;
   cursor: pointer;
-  &:hover {
-    transform: translateY(-3px);
-  }
 }
 
 .hero-image {

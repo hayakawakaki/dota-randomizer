@@ -1,3 +1,4 @@
+import { useRef, type RefObject } from "react";
 import "@features/heroes/styles/HeroIcon.css";
 
 type HeroImageProps = {
@@ -5,6 +6,7 @@ type HeroImageProps = {
   heroName?: string | null;
   attrID?: number | null;
   showName?: boolean;
+  onHover: (e: HTMLDivElement, type: boolean) => void;
 };
 
 export function HeroIcon({
@@ -12,9 +14,14 @@ export function HeroIcon({
   heroName,
   attrID,
   showName,
+  onHover,
 }: HeroImageProps) {
   return (
-    <div className="hero-icon">
+    <div
+      className="hero-icon"
+      onMouseEnter={(e) => onHover(e.currentTarget, true)}
+      onMouseLeave={(e) => onHover(e.currentTarget, false)}
+    >
       <img
         className="hero-image"
         src={`/images/heroes/${imageName}.webp`}
