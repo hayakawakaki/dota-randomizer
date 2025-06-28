@@ -1,4 +1,3 @@
-import { useRef, type RefObject } from "react";
 import "@features/heroes/styles/HeroIcon.css";
 
 type HeroImageProps = {
