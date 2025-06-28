@@ -11,7 +11,7 @@ export function HeroesGrid() {
 
   const gridContainerRef = useRef<HTMLDivElement>(null);
 
-  useGSAP(
+  const { contextSafe } = useGSAP(
     () => {
       gsap.fromTo(
         ".hero-icon",
@@ -25,10 +25,10 @@ export function HeroesGrid() {
     { dependencies: [heroes], scope: gridContainerRef, revertOnUpdate: true }
   );
 
-  const onHandleHover = (ref: HTMLDivElement, type: boolean) => {
+  const onHandleHover = contextSafe((ref: HTMLDivElement, type: boolean) => {
     if (type) gsap.to(ref, { duration: 0.1, y: -3 });
     else gsap.to(ref, { duration: 0.1, y: 0 });
-  };
+  });
 
   //= Prevent grid item from re-rendering mainly when randomizing
   const gridItems = useMemo(() => {
