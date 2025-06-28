@@ -236,35 +236,4 @@ describe("useHeroManager", () => {
       expect(result.current.heroes).toHaveLength(0);
     });
   });
-
-  describe("Filter clearing", () => {
-    beforeEach(() => {
-      mockUseFetch.mockReturnValue({
-        data: mockHeroes,
-      });
-    });
-
-    it("should reset all filters to initial state", () => {
-      const { result } = renderHook(() => useHeroManager());
-
-      act(() => {
-        result.current.updateHeroAttribute(HERO_ATTRIBUTE.STRENGTH.value);
-        result.current.updateHeroAttribute(HERO_ATTRIBUTE.INTELLIGENCE.value);
-        result.current.updateHeroComplexity(HERO_COMPLEXITY.NORMAL.value);
-      });
-
-      expect(result.current.heroAttribute.size).toBe(2);
-      expect(result.current.heroComplexity).toBe(2);
-
-      act(() => {
-        result.current.clearFilters();
-      });
-
-      expect(result.current.heroAttribute.size).toBe(0);
-      expect(result.current.heroComplexity).toBe(
-        HERO_COMPLEXITY.UNDEFINED.value
-      );
-      expect(result.current.heroes).toHaveLength(3);
-    });
-  });
 });

@@ -1,4 +1,4 @@
-import { createContext, useContext, type ReactNode } from "react";
+import { createContext, type ReactNode } from "react";
 import {
   useHeroManager,
   useHeroRandom,
@@ -7,7 +7,9 @@ import {
 } from "@features/heroes";
 
 type HeroContextType = HeroManagerReturn & HeroRandomReturn;
-const HeroContext = createContext<HeroContextType | undefined>(undefined);
+export const HeroContext = createContext<HeroContextType | undefined>(
+  undefined
+);
 
 type HeroProviderProps = {
   children: ReactNode;
@@ -19,15 +21,5 @@ export function HeroProvider({ children }: HeroProviderProps) {
 
   const providerValue = { ...heroData, ...randomData };
 
-  console.log("HeroProvider rendering");
-
   return <HeroContext value={providerValue}>{children}</HeroContext>;
-}
-
-export function useHeroContext() {
-  const context = useContext(HeroContext);
-  if (context === undefined) {
-    throw new Error("useHeroContext must be used within a HeroProvider");
-  }
-  return context;
 }

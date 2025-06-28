@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useDeviceContext } from "@/hooks/device";
 import { useHeroContext } from "@/features/heroes";
 import { ToggleButton, SliderCheckBox } from "@components/ui";
@@ -23,6 +23,69 @@ export function HeroesConfigPanel() {
     randomizeSetting,
   } = useHeroContext();
 
+  const randomizationSection = useMemo(() => {
+    return (
+      <ConfigPanelSection
+        className="settings-panel"
+        label="Randomization Setting"
+        data={RANDOMIZE_SETTING_BUTTONS}
+        renderItem={(item) => (
+          <SliderCheckBox
+            key={`setting-button-${item.key}`}
+            label={item.label}
+            checked={randomizeSetting[item.key]}
+            onChange={() => updateRandomizationSetting(item.key)}
+          />
+        )}
+      />
+    );
+  }, [randomizeSetting]);
+
+  const attributeSection = useMemo(() => {
+    return (
+      <ConfigPanelSection
+        className="attr-panel"
+        label="Attributes Filter"
+        data={ATTRIBUTE_BUTTONS}
+        renderItem={(item) => (
+          <ToggleButton
+            className={`attr-buttons attr-${item.value}`}
+            activeClassName="attr-buttons-active"
+            isActive={heroAttribute.has(item.value)}
+            onClick={() => updateHeroAttribute(item.value)}
+            key={`attr-button-${item.label}`}
+          >
+            <img src={`/images/attr/${item.value}.webp`} />
+          </ToggleButton>
+        )}
+      />
+    );
+  }, [heroAttribute]);
+
+  const complexitySection = useMemo(() => {
+    return (
+      <ConfigPanelSection
+        className="complexity-panel"
+        label="Complexity Filter"
+        data={COMPLEXITY_BUTTONS}
+        renderItem={(item) => (
+          <ToggleButton
+            className="complexity-buttons"
+            activeClassName="complexity-buttons-active"
+            isActive={heroComplexity >= item.value}
+            onClick={() => updateHeroComplexity(item.value)}
+            key={`complexity-button-${item.label}`}
+          >
+            <img
+              src="/images/diamond.webp"
+              alt={`Complexity - ${item.label}`}
+            />
+          </ToggleButton>
+        )}
+      />
+    );
+  }, [heroComplexity]);
+
   return (
     <aside className="heroes-config-panel">
       {isMobile && (
@@ -34,54 +97,9 @@ export function HeroesConfigPanel() {
         </ToggleButton>
       )}
       <div className={isPanelOpen ? "config-panel visible" : "config-panel"}>
-        <ConfigPanelSection
-          className="settings-panel"
-          label="Randomization Setting"
-          data={RANDOMIZE_SETTING_BUTTONS}
-          renderItem={(item) => (
-            <SliderCheckBox
-              key={`setting-button-${item.key}`}
-              label={item.label}
-              checked={randomizeSetting[item.key]}
-              onChange={() => updateRandomizationSetting(item.key)}
-            />
-          )}
-        />
-        <ConfigPanelSection
-          className="attr-panel"
-          label="Attributes Filter"
-          data={ATTRIBUTE_BUTTONS}
-          renderItem={(item) => (
-            <ToggleButton
-              className={`attr-buttons attr-${item.value}`}
-              activeClassName="attr-buttons-active"
-              isActive={heroAttribute.has(item.value)}
-              onClick={() => updateHeroAttribute(item.value)}
-              key={`attr-button-${item.label}`}
-            >
-              <img src={`/images/attr/${item.value}.webp`} />
-            </ToggleButton>
-          )}
-        />
-        <ConfigPanelSection
-          className="complexity-panel"
-          label="Complexity Filter"
-          data={COMPLEXITY_BUTTONS}
-          renderItem={(item) => (
-            <ToggleButton
-              className="complexity-buttons"
-              activeClassName="complexity-buttons-active"
-              isActive={heroComplexity >= item.value}
-              onClick={() => updateHeroComplexity(item.value)}
-              key={`complexity-button-${item.label}`}
-            >
-              <img
-                src="/images/diamond.webp"
-                alt={`Complexity - ${item.label}`}
-              />
-            </ToggleButton>
-          )}
-        />
+        {randomizationSection}
+        {attributeSection}
+        {complexitySection}
       </div>
     </aside>
   );

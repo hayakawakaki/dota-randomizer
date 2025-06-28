@@ -10,7 +10,8 @@ export { useHeroManager, type HeroManagerReturn } from "./hooks/useHeroManager";
 export { useHeroRandom, type HeroRandomReturn } from "./hooks/useHeroRandom";
 
 // Context
-export { useHeroContext, HeroProvider } from "./context/HeroContext";
+export { HeroProvider } from "./context/HeroContext";
+export { useHeroContext } from "./context/useHeroContext";
 
 // Types
 export type {

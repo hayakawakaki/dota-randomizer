@@ -1,6 +1,6 @@
-import { useState, useRef, type RefObject } from "react";
+import { useState, useRef, type RefObject, useCallback } from "react";
 import { HERO_RANDOMIZE_SETTING, HERO_LANES } from "@/constant";
-import type { HeroTypes } from "@/features/heroes/types/heroes.types";
+import type { HeroTypes } from "@/features/heroes";
 import type {
   HeroRandomizeSetting,
   HeroRandomizeSettingKey,
@@ -8,8 +8,7 @@ import type {
 } from "@/features/heroes";
 
 export type HeroRandomReturn = {
-  randomHero: string | null;
-  heroNameRef: RefObject<string | null>;
+  randomHero: HeroTypes | null;
   isRandomizing: boolean;
   randomizedLaneRef: RefObject<string | null>;
   randomizeSetting: HeroRandomizeSetting;
@@ -26,13 +25,12 @@ export function setInitialRandomizeSettings() {
 }
 
 export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
-  const [randomHero, setRandomHero] = useState<string | null>(null);
+  const [randomHero, setRandomHero] = useState<HeroTypes | null>(null);
   const [isRandomizing, setIsRandomizing] = useState<boolean>(false);
   const [randomizeSetting, setRandomizeSetting] =
     useState<HeroRandomizeSetting>(setInitialRandomizeSettings);
   const lastRandomizedHeroRef = useRef<number | null>(null);
   const randomizedLaneRef = useRef<HeroLanes | null>(null);
-  const heroNameRef = useRef<string | null>("Unknown Hero");
 
   function randomizeLane() {
     const lanes = Object.values(HERO_LANES);
@@ -41,8 +39,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
   }
 
   async function animateRandomization() {
-    let heroIdx;
-    let laneIdx;
+    let heroIdx, laneIdx;
     const lanes = randomizeSetting.LANES ? Object.values(HERO_LANES) : null;
 
     for (let i = 0; i < 40; i++) {
@@ -52,8 +49,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
         setTimeout(resolve, 10 + i * 5);
       });
 
-      setRandomHero(heroes[heroIdx].name);
-      heroNameRef.current = heroes[heroIdx].name_loc;
+      setRandomHero(heroes[heroIdx]);
 
       if (lanes) {
         laneIdx = Math.floor(Math.random() * lanes.length);
@@ -82,8 +78,7 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
 
     // Set result
     lastRandomizedHeroRef.current = idx;
-    setRandomHero(heroes[idx].name);
-    heroNameRef.current = heroes[idx].name_loc;
+    setRandomHero(heroes[idx]);
 
     // Randomize lanes setting
     if (randomizeSetting.LANES === true) {
@@ -94,19 +89,21 @@ export function useHeroRandom(heroes: HeroTypes[]): HeroRandomReturn {
     }
   }
 
-  function updateRandomizationSetting(targetSetting: HeroRandomizeSettingKey) {
-    setRandomizeSetting((prev) => ({
-      ...prev,
-      [targetSetting]: !prev[targetSetting],
-    }));
-  }
+  const updateRandomizationSetting = useCallback(
+    (targetSetting: HeroRandomizeSettingKey) => {
+      setRandomizeSetting((prev) => ({
+        ...prev,
+        [targetSetting]: !prev[targetSetting],
+      }));
+    },
+    []
+  );
 
   return {
     randomHero,
     isRandomizing,
     randomizedLaneRef,
     randomizeSetting,
-    heroNameRef,
     randomizeHero,
     updateRandomizationSetting,
   };
