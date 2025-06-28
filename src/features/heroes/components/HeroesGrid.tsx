@@ -11,7 +11,7 @@ export function HeroesGrid() {
 
   const gridContainerRef = useRef<HTMLDivElement>(null);
 
-  const { contextSafe } = useGSAP(
+  useGSAP(
     () => {
       gsap.fromTo(
         ".hero-icon",
@@ -21,14 +21,19 @@ export function HeroesGrid() {
           stagger: { each: 0.05, from: "start", grid: "auto" },
         }
       );
+
+      const hoverElements: HTMLElement[] = gsap.utils.toArray(".hero-icon");
+      hoverElements.forEach((element) => {
+        element.addEventListener("mouseenter", () => {
+          gsap.to(element, { duration: 0.1, y: -3 });
+        });
+        element.addEventListener("mouseleave", () => {
+          gsap.to(element, { duration: 0.1, y: 0 });
+        });
+      });
     },
     { dependencies: [heroes], scope: gridContainerRef, revertOnUpdate: true }
   );
-
-  const onHandleHover = contextSafe((ref: HTMLDivElement, type: boolean) => {
-    if (type) gsap.to(ref, { duration: 0.1, y: -3 });
-    else gsap.to(ref, { duration: 0.1, y: 0 });
-  });
 
   //= Prevent grid item from re-rendering mainly when randomizing
   const gridItems = useMemo(() => {
@@ -39,7 +44,6 @@ export function HeroesGrid() {
         imageName={item.name}
         attrID={item.primary_attr}
         showName={isDeviceAtLeast("TABLET")}
-        onHover={onHandleHover}
       />
     ));
   }, [heroes, currentDevice]);
