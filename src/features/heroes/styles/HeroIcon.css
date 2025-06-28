@@ -33,8 +33,9 @@
   width: 100%;
   text-align: center;
   font-size: 0.75rem;
+  font-weight: 700;
   word-wrap: break-word;
-  text-shadow: 0 0 3px black;
+  text-shadow: 0 1px 3px rgb(0, 0, 0);
 }
 
 /* Tablet Size */
@@ -44,6 +45,15 @@
     top: 0.2rem;
     right: 0.2rem;
     max-width: 1.5rem;
+  }
+
+  .hero-name {
+    background: linear-gradient(
+      to left,
+      rgba(0, 0, 0, 0.3),
+      rgba(0, 0, 0, 0.3)
+    );
+    border-radius: 0 0 0.5rem 0.5rem;
   }
 }
 
