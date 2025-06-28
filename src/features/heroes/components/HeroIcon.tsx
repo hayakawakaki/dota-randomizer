@@ -5,7 +5,7 @@ type HeroImageProps = {
   heroName?: string | null;
   attrID?: number | null;
   showName?: boolean;
-  onHover: (e: HTMLDivElement, type: boolean) => void;
+  onHover?: (e: HTMLDivElement, type: boolean) => void;
 };
 
 export function HeroIcon({
@@ -18,8 +18,8 @@ export function HeroIcon({
   return (
     <div
       className="hero-icon"
-      onMouseEnter={(e) => onHover(e.currentTarget, true)}
-      onMouseLeave={(e) => onHover(e.currentTarget, false)}
+      onMouseEnter={(e) => onHover?.(e.currentTarget, true)}
+      onMouseLeave={(e) => onHover?.(e.currentTarget, false)}
     >
       <img
         className="hero-image"
