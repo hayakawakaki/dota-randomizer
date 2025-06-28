@@ -1,19 +1,19 @@
+import { useState } from "react";
 import { useHeroContext, HeroIcon } from "@/features/heroes";
 import "@features/heroes/styles/HeroesResult.css";
-import { useState } from "react";
 import { XIcon } from "@phosphor-icons/react/dist/ssr";
 
 export function HeroesResult() {
+  const [compStyle, setcompStyle] = useState<string>("heroes-result");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
   const {
     randomHero,
     randomizedLaneRef,
     isRandomizing,
     randomizeHero,
     randomizeSetting,
-    heroNameRef,
   } = useHeroContext();
-  const [compStyle, setcompStyle] = useState<string>("heroes-result");
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   async function handleOpen() {
     setcompStyle("heroes-result expanded");
@@ -27,13 +27,9 @@ export function HeroesResult() {
     setcompStyle("heroes-result");
   }
 
-  function onRerandomize() {
-    randomizeHero();
-  }
-
   return (
     <div className={compStyle}>
-      {!isOpen ? (
+      {!isOpen && (
         <button
           className="modal-open"
           onClick={handleOpen}
@@ -41,8 +37,8 @@ export function HeroesResult() {
         >
           Randomize
         </button>
-      ) : null}
-      {isOpen ? (
+      )}
+      {isOpen && (
         <button
           className="modal-close"
           onClick={handleClose}
@@ -50,24 +46,31 @@ export function HeroesResult() {
         >
           <XIcon />
         </button>
-      ) : null}
-      {isOpen ? (
+      )}
+      {isOpen && (
         <div className="modal-item">
-          <HeroIcon imageName={randomHero} heroName={heroNameRef.current} />
+          <HeroIcon
+            imageName={randomHero === null ? "unknown" : randomHero.name}
+            heroName={
+              randomHero === null ? "Unknown Hero" : randomHero.name_loc
+            }
+            attrID={randomHero === null ? 0 : randomHero.primary_attr}
+            showName={true}
+          />
           {randomizeSetting["LANES"] && randomizedLaneRef.current && (
             <p className="result-lane">{randomizedLaneRef.current}</p>
           )}
-          {isOpen ? (
+          {isOpen && (
             <button
               className="random-button"
-              onClick={onRerandomize}
+              onClick={randomizeHero}
               disabled={isRandomizing}
             >
               {isRandomizing ? "Randomizing..." : "Randomize"}
             </button>
-          ) : null}
+          )}
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

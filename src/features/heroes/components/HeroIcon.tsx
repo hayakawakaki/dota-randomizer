@@ -1,15 +1,18 @@
-import { useDevice } from "@/hooks/device";
 import "@features/heroes/styles/HeroIcon.css";
 
 type HeroImageProps = {
   imageName: string | null;
   heroName?: string | null;
   attrID?: number | null;
+  showName?: boolean;
 };
 
-export function HeroIcon({ imageName, heroName, attrID }: HeroImageProps) {
-  const { isDeviceAtLeast } = useDevice();
-
+export function HeroIcon({
+  imageName,
+  heroName,
+  attrID,
+  showName,
+}: HeroImageProps) {
   return (
     <div className="hero-icon">
       <img
@@ -24,9 +27,7 @@ export function HeroIcon({ imageName, heroName, attrID }: HeroImageProps) {
           alt={`${heroName === null ? "Hero" : heroName}'s Attribute`}
         />
       )}
-      {isDeviceAtLeast("TABLET") && heroName && (
-        <p className="hero-name">{heroName}</p>
-      )}
+      {showName && heroName && <p className="hero-name">{heroName}</p>}
     </div>
   );
 }
