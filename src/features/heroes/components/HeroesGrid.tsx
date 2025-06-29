@@ -1,56 +1,65 @@
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { useHeroContext, HeroIcon } from "@/features/heroes";
 import { useDevice } from "@/hooks/device";
-import { gsap } from "gsap/gsap-core";
-import { useGSAP } from "@gsap/react";
-import "@features/heroes/styles/HeroesGrid.css";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
+import { motion, AnimatePresence } from "motion/react";
+import "@features/heroes/styles/HeroesGrid.css";
 
 export function HeroesGrid() {
   const { heroes } = useHeroContext();
   const { currentDevice, isDeviceAtLeast } = useDevice();
 
-  const gridContainerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useSmoothScroll<HTMLDivElement>(0.3, 0.1);
-
-  const { contextSafe } = useGSAP(
-    () => {
-      gsap.fromTo(
-        ".hero-icon",
-        { opacity: 0 },
-        {
-          opacity: 1,
-          stagger: { each: 0.05, from: "start", grid: "auto" },
-        }
-      );
-    },
-    { dependencies: [heroes], scope: gridContainerRef, revertOnUpdate: true }
-  );
-
-  const onHandleHover = contextSafe((ref: HTMLDivElement, type: boolean) => {
-    if (type) gsap.to(ref, { duration: 0.1, y: -3 });
-    else gsap.to(ref, { duration: 0.1, y: 0 });
-  });
 
   //= Prevent grid item from re-rendering mainly when randomizing
   const gridItems = useMemo(() => {
-    return heroes.map((item) => (
-      <HeroIcon
-        key={`hero-${item.id}`}
-        heroName={item.name_english_loc}
-        imageName={item.name}
-        attrID={item.primary_attr}
-        showName={isDeviceAtLeast("TABLET")}
-        onHover={onHandleHover}
-      />
-    ));
+    return (
+      <AnimatePresence>
+        {heroes.map((item) => (
+          <motion.div
+            key={`hero-${item.id}`}
+            layout
+            variants={{
+              hidden: { opacity: 0, scale: 0.5, y: 5 },
+              visible: { opacity: 1, scale: 1, y: 0 },
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.5,
+              x: -20,
+              transition: { duration: 0.2 },
+            }}
+            transition={{ duration: 0.2, ease: "easeIn" }}
+          >
+            <HeroIcon
+              heroName={item.name_english_loc}
+              imageName={item.name}
+              attrID={item.primary_attr}
+              showName={isDeviceAtLeast("TABLET")}
+            />
+          </motion.div>
+        ))}
+      </AnimatePresence>
+    );
   }, [heroes, currentDevice]);
 
   return (
-    <div ref={scrollContainerRef} className="heroes-container">
-      <div ref={gridContainerRef} className="heroes-grid">
-        {gridItems}
-      </div>
-    </div>
+    <motion.div
+      ref={scrollContainerRef}
+      className="heroes-container"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: {},
+        visible: {
+          transition: {
+            from: "edges",
+            staggerChildren: 0.01,
+          },
+        },
+      }}
+    >
+      <div className="heroes-grid">{gridItems}</div>
+    </motion.div>
   );
 }
