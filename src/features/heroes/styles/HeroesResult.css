@@ -22,7 +22,7 @@
   bottom: 50% !important;
   transform: translate(-50%, 50%) !important;
   width: calc(100vw - calc(var(--padding) * 2)) !important;
-  height: 50vh !important;
+  height: 60vh !important;
 }
 
 .modal-item {
