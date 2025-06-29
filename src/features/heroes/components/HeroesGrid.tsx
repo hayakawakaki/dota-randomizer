@@ -4,7 +4,7 @@ import { useDevice } from "@/hooks/device";
 import { gsap } from "gsap/gsap-core";
 import { useGSAP } from "@gsap/react";
 import "@features/heroes/styles/HeroesGrid.css";
-import { useSmoothScroll } from "@/hooks/useSlowScroll";
+import { useSmoothScroll } from "@/hooks/useSmoothScroll";
 
 export function HeroesGrid() {
   const { heroes } = useHeroContext();
