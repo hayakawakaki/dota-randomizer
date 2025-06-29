@@ -1,4 +1,4 @@
-import { useMemo, useRef } from "react";
+import { useMemo } from "react";
 import { useHeroContext, HeroIcon } from "@/features/heroes";
 import { useDevice } from "@/hooks/device";
 import { useSmoothScroll } from "@/hooks/useSmoothScroll";
