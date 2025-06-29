@@ -4,12 +4,14 @@ import { useDevice } from "@/hooks/device";
 import { gsap } from "gsap/gsap-core";
 import { useGSAP } from "@gsap/react";
 import "@features/heroes/styles/HeroesGrid.css";
+import { useSmoothScroll } from "@/hooks/useSlowScroll";
 
 export function HeroesGrid() {
   const { heroes } = useHeroContext();
   const { currentDevice, isDeviceAtLeast } = useDevice();
 
   const gridContainerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useSmoothScroll<HTMLDivElement>(0.3, 0.1);
 
   const { contextSafe } = useGSAP(
     () => {
@@ -45,7 +47,7 @@ export function HeroesGrid() {
   }, [heroes, currentDevice]);
 
   return (
-    <div className="heroes-container">
+    <div ref={scrollContainerRef} className="heroes-container">
       <div ref={gridContainerRef} className="heroes-grid">
         {gridItems}
       </div>
