@@ -37,7 +37,9 @@ export function HeroesResult() {
           disabled={isRandomizing || isOpen}
         >
           <p>Randomize</p>
-          <span className="random-icon">{<ArrowsClockwiseIcon />}</span>
+          <span className="random-icon">
+            <ArrowsClockwiseIcon />
+          </span>
         </button>
       )}
       {isOpen && (
@@ -87,7 +89,7 @@ export function HeroesResult() {
                   }
                   className="random-icon"
                 >
-                  {<ArrowsClockwiseIcon />}
+                  <ArrowsClockwiseIcon />
                 </motion.span>
               )}
             </button>
