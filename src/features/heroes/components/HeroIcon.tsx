@@ -1,3 +1,4 @@
+import { motion } from "motion/react";
 import "@features/heroes/styles/HeroIcon.css";
 
 type HeroImageProps = {
@@ -5,7 +6,6 @@ type HeroImageProps = {
   heroName?: string | null;
   attrID?: number | null;
   showName?: boolean;
-  onHover?: (e: HTMLDivElement, type: boolean) => void;
 };
 
 export function HeroIcon({
@@ -13,13 +13,15 @@ export function HeroIcon({
   heroName,
   attrID,
   showName,
-  onHover,
 }: HeroImageProps) {
   return (
-    <div
+    <motion.a
+      whileHover={{ scale: 1.3, zIndex: 1 }}
       className="hero-icon"
-      onMouseEnter={(e) => onHover?.(e.currentTarget, true)}
-      onMouseLeave={(e) => onHover?.(e.currentTarget, false)}
+      href={`https://www.dota2.com/hero/${heroName
+        ?.toLowerCase()
+        .replace(" ", "")}`}
+      target="_blank"
     >
       <img
         className="hero-image"
@@ -34,6 +36,6 @@ export function HeroIcon({
         />
       )}
       {showName && heroName && <p className="hero-name">{heroName}</p>}
-    </div>
+    </motion.a>
   );
 }

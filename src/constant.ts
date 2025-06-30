@@ -15,7 +15,7 @@ export const HERO_ATTRIBUTE = {
 } as const;
 
 export const HERO_RANDOMIZE_SETTING = {
-  LANES: { key: "LANES", label: "Randomize Lanes", default: false },
+  LANES: { key: "LANES", label: "Randomize Lanes", default: true },
   SKIPANIMATION: {
     key: "SKIPANIMATION",
     label: "Skip Animation",
