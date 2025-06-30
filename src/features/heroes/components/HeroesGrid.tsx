@@ -27,7 +27,7 @@ export function HeroesGrid() {
               opacity: 0,
               scale: 0.5,
               x: -20,
-              transition: { duration: 0.2 },
+              transition: { duration: 0.1 },
             }}
             transition={{ duration: 0.2, ease: "easeIn" }}
           >

@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { useHeroContext, HeroIcon } from "@/features/heroes";
+import { XIcon, ArrowsClockwiseIcon } from "@phosphor-icons/react/dist/ssr";
+import { useCycle, motion } from "motion/react";
 import "@features/heroes/styles/HeroesResult.css";
-import { XIcon } from "@phosphor-icons/react/dist/ssr";
 
 export function HeroesResult() {
   const [compStyle, setcompStyle] = useState<string>("heroes-result");
@@ -35,7 +36,8 @@ export function HeroesResult() {
           onClick={handleOpen}
           disabled={isRandomizing || isOpen}
         >
-          Randomize
+          <p>Randomize</p>
+          <span className="random-icon">{<ArrowsClockwiseIcon />}</span>
         </button>
       )}
       {isOpen && (
@@ -66,7 +68,18 @@ export function HeroesResult() {
               onClick={randomizeHero}
               disabled={isRandomizing}
             >
-              {isRandomizing ? "Randomizing..." : "Randomize"}
+              <p>{isRandomizing ? "Randomizing..." : "Randomize"}</p>
+              <motion.span
+                animate={{ rotate: isRandomizing ? 360 : undefined }}
+                transition={
+                  isRandomizing
+                    ? { duration: 1, ease: "linear", repeat: Infinity }
+                    : { duration: 0 }
+                }
+                className="random-icon"
+              >
+                {<ArrowsClockwiseIcon />}
+              </motion.span>
             </button>
           )}
         </div>
