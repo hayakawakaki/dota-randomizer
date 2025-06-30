@@ -33,7 +33,11 @@ export const HERO_LANES = {
 
 //= Links
 export const LINKS = [
-  { label: "View Code", icon: CodeIcon, link: "https://github.com" },
+  {
+    label: "View Code",
+    icon: CodeIcon,
+    link: "https://github.com/hayakawakaki/dota-randomizer",
+  },
 ] as const;
 
 //= UI Related Constants
