@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useHeroContext, HeroIcon } from "@/features/heroes";
 import { XIcon, ArrowsClockwiseIcon } from "@phosphor-icons/react/dist/ssr";
-import { useCycle, motion } from "motion/react";
+import { motion } from "motion/react";
 import "@features/heroes/styles/HeroesResult.css";
 
 export function HeroesResult() {
