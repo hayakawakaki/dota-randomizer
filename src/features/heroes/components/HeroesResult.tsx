@@ -68,18 +68,28 @@ export function HeroesResult() {
               onClick={randomizeHero}
               disabled={isRandomizing}
             >
-              <p>{isRandomizing ? "Randomizing..." : "Randomize"}</p>
-              <motion.span
-                animate={{ rotate: isRandomizing ? 360 : undefined }}
-                transition={
-                  isRandomizing
-                    ? { duration: 1, ease: "linear", repeat: Infinity }
-                    : { duration: 0 }
-                }
-                className="random-icon"
-              >
-                {<ArrowsClockwiseIcon />}
-              </motion.span>
+              {isRandomizing || (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  Randomize
+                </motion.p>
+              )}
+              {isRandomizing && (
+                <motion.span
+                  animate={{ rotate: isRandomizing ? 360 : undefined }}
+                  transition={
+                    isRandomizing
+                      ? { duration: 1, ease: "linear", repeat: Infinity }
+                      : { duration: 0 }
+                  }
+                  className="random-icon"
+                >
+                  {<ArrowsClockwiseIcon />}
+                </motion.span>
+              )}
             </button>
           )}
         </div>
